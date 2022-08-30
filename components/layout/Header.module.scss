@@ -1,3 +1,52 @@
-.test {
-  color: red;
+@import "assets/styles/colors";
+@import "assets/styles/mixins";
+
+.nav {
+  @include respond(desktop) {
+    display: none;
+  }
+
+  z-index: 140;
+
+  &__overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &__content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 80%;
+    height: 100%;
+    transform: translateX(-100%);
+    background-color: rgba(0, 0, 0, 0.97);
+    transition: all 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+  }
+
+  &__content.active {
+    transform: translateX(0);
+  }
+}
+
+.d-flex {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  transform: translateY(15px);
+}
+
+.button-nav {
+  display: flex;
+  align-items: center;
+  color: #fff !important;
+  margin: 16px 10px !important;
+  &:hover {
+    color: #ff514e !important;
+  }
 }

@@ -1,5 +1,8 @@
 @import "normalize.css";
 
+@import "assets/styles/colors";
+@import "assets/styles/mixins";
+
 body {
   margin: 0;
   padding: 0;
@@ -11,6 +14,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
+  // background-color: black;
 }
 
 html {
@@ -18,12 +22,31 @@ html {
   line-height: 1.4;
 }
 
+ul {
+  list-style: none;
+}
+
 a {
   text-decoration: none;
 }
 
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  z-index: 90;
+}
+
+.css-1kxwfp {
+  display: "none !important";
+}
+
 ::-webkit-scrollbar {
   width: 1.2rem;
+  background-color: $scrollbar-background-color;
 }
 
 ::-webkit-scrollbar-track {
@@ -33,6 +56,6 @@ a {
 ::-webkit-scrollbar-thumb {
   border-radius: 20px;
   border: 2px solid transparent;
-  background-clip: content-box;
+  background-color: $scrollbar-color;
   background-clip: content-box;
 }
