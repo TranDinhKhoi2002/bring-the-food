@@ -1,10 +1,14 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useLayoutEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../../assets/images/logo.png";
 import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
+import LogoutButton from "../auth/LogoutButton";
+import { selectFoodById } from "../../src/store/food";
+import { cartActions } from "../../src/store/cart";
 
 import AppBar from "@mui/material/AppBar";
 import Container from "@mui/material/Container";
@@ -32,7 +36,24 @@ function Header() {
   const [isShowNav, setIsShowNav] = useState(false);
   const router = useRouter();
 
-  const ref = useRef();
+  const ref = useRef(null);
+
+  useLayoutEffect(() => {
+    const navbar = ref.current;
+    window.addEventListener("scroll", () => {
+      if (
+        document.body.scrollTop > 50 ||
+        document.documentElement.scrollTop > 50
+      ) {
+        navbar.style.backgroundColor = "rgba(0, 0, 0, 0.84)";
+        navbar.style.marginTop = "0";
+      } else {
+        navbar.style.backgroundColor = "transparent";
+        navbar.style.boxShadow = "unset";
+        navbar.style.marginTop = "5px";
+      }
+    });
+  });
 
   let nameGg, imageGg, nameFb, imageFb;
   if (typeof window !== "undefined") {
@@ -42,12 +63,19 @@ function Header() {
     imageFb = localStorage.getItem("imageFb");
   }
 
+  const dispatch = useDispatch();
+  const foodById = useSelector(selectFoodById);
+
   const toggleNavBarHandler = () => {
     setIsShowNav((prevState) => !prevState);
   };
 
   const loginHandler = () => {
     router.push("/login");
+  };
+
+  const showCartHandler = () => {
+    dispatch(cartActions.showCart(true));
   };
 
   return (
@@ -108,14 +136,18 @@ function Header() {
                         </p>
                       </div>
                     ) : (
-                      <button onClick={loginHandler}>
+                      <div onClick={loginHandler}>
                         <Avatar src="" className={cx("nav__icon")} />
-                      </button>
+                      </div>
                     )}
                   </div>
                   <div>
                     <CloseIcon
-                      sx={{ fontSize: 28, paddingRight: "10px !important" }}
+                      sx={{
+                        fontSize: 28,
+                        paddingRight: "10px !important",
+                        cursor: "pointer",
+                      }}
                       onClick={toggleNavBarHandler}
                     />
                   </div>
@@ -147,7 +179,7 @@ function Header() {
                     <div className={cx("nav__item")}>
                       <LogoutIcon sx={{ fontSize: 28 }} />
                       Logout
-                      {/* Logout handling */}
+                      <LogoutButton />
                     </div>
                   )}
                 </ul>
@@ -209,14 +241,16 @@ function Header() {
               </Link>
             </Box>
 
-            <Box className={cx("shopping-cart")}>
+            <Box
+              className={cx("shopping-cart", "navbar__cart")}
+              onClick={showCartHandler}
+            >
               <ShoppingCartIcon />
-              {/* Cart slice */}
-              <Box>2</Box>
+              <Box className={cx("navbar__cart-amount")}>{foodById.length}</Box>
             </Box>
 
             <Box
-              className={cx("nav__account")}
+              className={cx("navbar__account")}
               sx={{ flexGrow: 0, position: "relative" }}
             >
               {nameGg || nameFb ? (
@@ -247,31 +281,32 @@ function Header() {
                     variant="h6"
                     sx={{ fontSize: "1.5rem", fontWeight: 600, paddingLeft: 1 }}
                   >
-                    Signin
+                    Sign In
                   </Typography>
                 </Box>
               )}
 
               {(nameGg || nameFb) && (
-                <ul className={cx("nav__account-options")}>
-                  <li className={cx("nav__account-option")}>
+                <ul className={cx("navbar__account-options")}>
+                  <li className={cx("navbar__account-option")}>
                     <AccountBoxIcon />
                     <span>My account</span>
                   </li>
 
-                  <li className={cx("nav__account-option")}>
+                  <li className={cx("navbar__account-option")}>
                     <SellIcon />
                     <span>My cart</span>
                   </li>
 
-                  <li className={cx("nav__account-option")}>Logout button</li>
+                  <li className={cx("navbar__account-option")}>
+                    <LogoutButton />
+                  </li>
                 </ul>
               )}
             </Box>
           </Toolbar>
         </Container>
       </AppBar>
-      {/* DialogComponent */}
       {isShowNav && (
         <Box className="overlay" onClick={toggleNavBarHandler}></Box>
       )}

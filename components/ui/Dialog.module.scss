@@ -1,0 +1,23 @@
+.title {
+  font-size: 1.6rem;
+}
+
+.content {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.login {
+  font-size: 1.2rem;
+  color: white;
+  background-color: #ff514e;
+
+  &:hover {
+    background-color: #d40f0c;
+  }
+}
+
+.cancel {
+  font-size: 1.2rem;
+  color: rgba(0, 0, 0, 0.84);
+}

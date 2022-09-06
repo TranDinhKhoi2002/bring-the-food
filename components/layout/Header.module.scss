@@ -1,6 +1,111 @@
 @import "assets/styles/colors";
 @import "assets/styles/mixins";
 
+.navbar {
+  &__cart {
+    position: relative;
+    padding: 0 10px;
+    margin-right: 40px;
+    cursor: pointer;
+    user-select: none;
+
+    & svg {
+      width: 2.8rem;
+      height: 2.8rem;
+    }
+
+    &-amount {
+      position: absolute;
+      top: 16px;
+      right: -2px;
+      font-size: 1.4rem;
+      width: 2.6rem;
+      height: 1.7rem;
+      background-color: #3c40c6;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @include respond(tablet) {
+      margin-right: 0;
+    }
+  }
+
+  &__account {
+    cursor: pointer;
+
+    &:hover .navbar__account-options {
+      visibility: visible;
+      opacity: 1;
+      top: 37px;
+    }
+
+    @include respond(tablet) {
+      display: none;
+    }
+  }
+
+  &__account-options {
+    position: absolute;
+    right: -20px;
+    top: 42px;
+    padding: 7px 0;
+    border-radius: 4px;
+    width: max-content;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    visibility: hidden;
+    opacity: 0;
+    background-color: $primary-white-color;
+    transition: all 0.15s linear;
+  }
+
+  &__account-options:before {
+    position: absolute;
+    right: 20px;
+    top: -19.5px;
+    content: "";
+    border: 10.5px solid transparent;
+    border-bottom-color: $primary-white-color;
+  }
+
+  &__account-option {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    line-height: 1.8;
+    padding: 6px 15px;
+    transition: all 0.08s ease-out;
+
+    & span {
+      color: $primary-black-color;
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+    }
+
+    & svg {
+      margin-right: 5px;
+      font-size: 1.8rem;
+      fill: rgba(0, 0, 0, 0.84);
+    }
+  }
+
+  &__account-option:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  &.active {
+    margin-top: 0;
+    background-color: $primary-black-color;
+  }
+}
+
+// Navbar mobile
 .nav {
   @include respond(desktop) {
     display: none;
@@ -28,6 +133,76 @@
   &__content.active {
     transform: translateX(0);
   }
+
+  &__list {
+    padding-left: 0;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    font-size: 1.4rem;
+    line-height: 1.7;
+    padding: 16px;
+    color: $primary-white-color;
+    cursor: pointer;
+
+    @include respond(phone) {
+      font-size: 1.3rem;
+    }
+  }
+
+  &__item svg {
+    font-size: 2.2rem;
+    margin-right: 8px;
+
+    @include respond(phone) {
+      font-size: 1.8rem;
+    }
+  }
+
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba($primary-white-color, 0.2);
+  }
+
+  &__account {
+    display: flex;
+    align-items: center;
+  }
+
+  &__account &__icon {
+    width: 3.5rem;
+    height: 3.5rem;
+    cursor: pointer;
+
+    @include respond(phone) {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+
+  &__username {
+    font-size: 1.4rem;
+    margin-left: 8px;
+    color: $primary-white-color;
+
+    @include respond(phone) {
+      font-size: 1.3rem;
+    }
+  }
+}
+
+.MuiTooltip-tooltipPlacementBottom {
+  display: none;
+}
+
+.login_btn {
+  color: $primary-white-color;
 }
 
 .d-flex {
@@ -44,9 +219,9 @@
 .button-nav {
   display: flex;
   align-items: center;
-  color: #fff !important;
-  margin: 16px 10px !important;
+  color: #fff;
+  margin: 16px 10px;
   &:hover {
-    color: #ff514e !important;
+    color: #ff514e;
   }
 }
