@@ -3,12 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "../../assets/images/logo.png";
+import logo from "../../../assets/images/logo.png";
 import classNames from "classnames/bind";
-import styles from "./Header.module.scss";
-import LogoutButton from "../auth/LogoutButton";
-import { selectFoodById } from "../../src/store/food";
-import { cartActions } from "../../src/store/cart";
+import styles from "./Navbar.module.scss";
+import LogoutButton from "../../auth/LogoutButton";
+import { selectFoodById } from "../../../src/store/food";
+import { cartActions } from "../../../src/store/cart";
 
 import AppBar from "@mui/material/AppBar";
 import Container from "@mui/material/Container";
@@ -32,7 +32,7 @@ import SellIcon from "@mui/icons-material/Sell";
 
 const cx = classNames.bind(styles);
 
-function Header() {
+function Navbar() {
   const [isShowNav, setIsShowNav] = useState(false);
   const router = useRouter();
 
@@ -113,7 +113,11 @@ function Header() {
 
             <Box>
               <MenuIcon
-                sx={{ fontSize: 28, display: { xs: "block", md: "none" } }}
+                sx={{
+                  fontSize: 28,
+                  display: { xs: "block", md: "none" },
+                  cursor: "pointer",
+                }}
                 onClick={toggleNavBarHandler}
               />
             </Box>
@@ -314,4 +318,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default Navbar;

@@ -1,17 +1,7 @@
-import { useDispatch } from "react-redux";
-import { foodActions } from "../src/store/food";
+import Slider from "../components/slider/Slider";
 
 function Home() {
-  const dispatch = useDispatch();
-
-  return (
-    <button
-      style={{ marginTop: "5000px" }}
-      onClick={() => dispatch(foodActions.fetchFoodList())}
-    >
-      Fetch food list
-    </button>
-  );
+  return <Slider />;
 }
 
 export default Home;
