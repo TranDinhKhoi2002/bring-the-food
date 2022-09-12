@@ -6,7 +6,8 @@ import Image from "next/image";
 import logo from "../../../assets/images/logo.png";
 import classNames from "classnames/bind";
 import styles from "./Navbar.module.scss";
-import LogoutButton from "../../auth/LogoutButton";
+import LogoutButton from "../../auth/logout/LogoutButton";
+import Dialog from "../../ui/dialog/Dialog";
 import { selectFoodById } from "../../../src/store/food";
 import { cartActions } from "../../../src/store/cart";
 
@@ -34,6 +35,9 @@ const cx = classNames.bind(styles);
 
 function Navbar() {
   const [isShowNav, setIsShowNav] = useState(false);
+  const [isShowDialog, setIsShowDialog] = useState(false);
+  const [isLogout, setIsLogout] = useState(false);
+
   const router = useRouter();
 
   const ref = useRef(null);
@@ -183,7 +187,7 @@ function Navbar() {
                     <div className={cx("nav__item")}>
                       <LogoutIcon sx={{ fontSize: 28 }} />
                       Logout
-                      <LogoutButton />
+                      <LogoutButton type={nameGg ? "gg" : "fb"} />
                     </div>
                   )}
                 </ul>
@@ -302,8 +306,11 @@ function Navbar() {
                     <span>My cart</span>
                   </li>
 
-                  <li className={cx("navbar__account-option")}>
-                    <LogoutButton />
+                  <li
+                    className={cx("navbar__account-option")}
+                    onClick={() => setIsLogout((prevState) => !prevState)}
+                  >
+                    <LogoutButton type={nameGg ? "gg" : "fb"} />
                   </li>
                 </ul>
               )}
@@ -311,9 +318,8 @@ function Navbar() {
           </Toolbar>
         </Container>
       </AppBar>
-      {isShowNav && (
-        <Box className="overlay" onClick={toggleNavBarHandler}></Box>
-      )}
+      <Dialog isShow={isShowDialog} onSetDialog={setIsShowDialog} />
+      {isShowNav && <Box className="overlay" onClick={toggleNavBarHandler} />}
     </>
   );
 }

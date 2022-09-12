@@ -6,7 +6,7 @@ import styles from "./LogoutButton.module.scss";
 const clientId =
   "28621200637-lrridduvsj91kgdmnrb7kugcpk4qnnpk.apps.googleusercontent.com";
 
-function LogoutButton() {
+function LogoutButton({ type }) {
   const router = useRouter();
 
   const onLogoutSuccess = () => {
@@ -29,8 +29,16 @@ function LogoutButton() {
     onFailure,
   });
 
+  const facebookLogout = () => {
+    localStorage.removeItem("imageFb");
+    localStorage.removeItem("nameFb");
+  };
+
   return (
-    <button onClick={signOut} className={styles.wrapper}>
+    <button
+      onClick={type === "gg" ? signOut : facebookLogout}
+      className={styles.wrapper}
+    >
       <LogoutIcon />
       Logout
     </button>

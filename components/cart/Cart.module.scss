@@ -1,0 +1,130 @@
+@import "assets/styles/colors";
+@import "assets/styles/mixins";
+
+.box {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 450px;
+  height: 100vh;
+  background-color: $primary-white-color;
+  z-index: 200;
+  animation: fadeInRight 0.3s ease-in-out;
+
+  @include respond(mobile) {
+    width: 100%;
+  }
+
+  &-main {
+    overflow-y: auto;
+    max-height: 500px;
+  }
+
+  & .empty-img {
+    width: 320px;
+    height: 320px;
+
+    @include respond(mobile) {
+      width: 240px;
+      height: 240px;
+    }
+  }
+}
+
+.heading {
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.84);
+  text-transform: uppercase;
+  margin-bottom: 0;
+}
+
+.btn-close {
+  color: #ff514e;
+  font-size: 3rem;
+  cursor: pointer;
+}
+
+.box-food {
+  display: flex;
+  margin-top: 20px;
+
+  & img {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.box-title {
+  padding-left: 10px;
+
+  & .MuiTypography-h5 {
+    font-size: 1.7rem !important;
+    line-height: 2rem !important;
+    color: rgba(0, 0, 0, 0.84) !important;
+  }
+
+  & .MuiTypography-body1 {
+    color: #ff514e !important;
+    font-size: 1.4rem !important;
+    line-height: 1.5rem !important;
+    font-weight: 500 !important;
+    margin-top: 2px;
+  }
+
+  & .MuiTypography-body2 {
+    font-size: 1.3rem !important;
+    line-height: 1.4rem !important;
+    color: rgba(7, 6, 6, 0.84) !important;
+    margin-top: 16px !important;
+  }
+}
+
+.delete-icon {
+  margin: auto 0 auto auto;
+  cursor: pointer;
+  & .MuiSvgIcon-root {
+    color: #b2bec3;
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+}
+
+.btn-checkout,
+.btn-buy {
+  display: flex;
+  font-size: 1.5rem;
+  color: white;
+  background-color: #ff514e;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: #f73835;
+  }
+}
+
+.empty-cart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+
+  & .MuiButton-root {
+    font-size: 1.5rem;
+    color: #fff;
+    background-color: #ff514e !important;
+    width: 200px;
+    border-radius: 4px;
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
