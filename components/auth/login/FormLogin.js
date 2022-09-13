@@ -36,30 +36,49 @@ const schema = yup.object({
   password: yup
     .string()
     .required("Password is required")
-    .matches(
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/,
-      "Password should containing at 8 characters, 1 number, 1 uppercase and 1 lowercase"
-    ),
+    .min(8, "Password must be at least 8 characters"),
+  confirmPassword: yup
+    .string()
+    .required("Confirm password is required")
+    .min(8, "Confirm password must be at least 8 characters")
+    .test("equal-password", "Confirm password is incorrect", function (value) {
+      if (value === undefined) return true;
+      const { password } = this.parent;
+      return value.match(password);
+    }),
 });
 
 function FormLogin() {
   const [loginWithEmailPhone, setLoginWithEmailPhone] = useState(false);
   const [loginWithFb, setLoginWithFb] = useState(false);
   const [signup, setSignup] = useState(false);
+  const [optionsIsShow, setOptionsIsShow] = useState(true);
   const router = useRouter();
 
-  const { control, handleSubmit } = useForm({ resolver: yupResolver(schema) });
+  const { control, handleSubmit, register, getValues } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const handleHideLoginEmailPhone = () => {
-    !loginWithEmailPhone ? router.push("/") : setLoginWithEmailPhone(false);
+    if (optionsIsShow) {
+      router.push("/");
+    } else {
+      setLoginWithEmailPhone(false);
+      setSignup(false);
+      setOptionsIsShow(true);
+    }
   };
 
   const handleShowLoginEmailPhone = () => {
     setLoginWithEmailPhone(true);
+    setSignup(false);
+    setOptionsIsShow(false);
   };
 
   const handleCreateAccount = () => {
     setSignup(true);
+    setLoginWithEmailPhone(false);
+    setOptionsIsShow(false);
   };
 
   const onSuccess = (res) => {
@@ -118,7 +137,14 @@ function FormLogin() {
     });
   };
 
-  const handleSubmitForm = () => {};
+  const handleSubmitForm = () => {
+    const [email, password, confirmPassword] = getValues([
+      "email",
+      "password",
+      "confirmPassword",
+    ]);
+    console.log(email, password, confirmPassword);
+  };
 
   return (
     <div
@@ -244,6 +270,7 @@ function FormLogin() {
               label="Email Address"
               control={control}
               placeholder="Email/Phone Number"
+              register={register}
             />
 
             <InputField
@@ -253,6 +280,53 @@ function FormLogin() {
               label="Password"
               control={control}
               placeholder="Enter your password"
+              register={register}
+            />
+
+            <Button
+              className={cx("btn-submit")}
+              type="submit"
+              variant="contained"
+              onClick={handleSubmitForm}
+            >
+              Submit
+            </Button>
+          </form>
+        )}
+
+        {signup && (
+          <form
+            className={cx("login-inputs")}
+            onSubmit={handleSubmit(handleSubmitForm)}
+          >
+            <InputField
+              className={cx("login-input")}
+              name="email"
+              type="email"
+              label="Email Address"
+              control={control}
+              placeholder="Email/Phone Number"
+              register={register}
+            />
+
+            <InputField
+              className={cx("login-input")}
+              name="password"
+              type="password"
+              label="Password"
+              control={control}
+              placeholder="Enter your password"
+              register={register}
+            />
+
+            <InputField
+              className={cx("login-input")}
+              name="confirmPassword"
+              type="password"
+              label="Confirm Password"
+              control={control}
+              placeholder="Confirm your password"
+              register={register}
             />
 
             <Button
@@ -265,12 +339,12 @@ function FormLogin() {
           </form>
         )}
 
-        {!loginWithEmailPhone && (
-          <div
-            className={cx("login-options")}
-            onClick={handleShowLoginEmailPhone}
-          >
-            <div className={cx("login-option--email")}>
+        {optionsIsShow && (
+          <div className={cx("login-options")}>
+            <div
+              className={cx("login-option--email")}
+              onClick={handleShowLoginEmailPhone}
+            >
               <Image
                 src={personalImg.src}
                 width={100}

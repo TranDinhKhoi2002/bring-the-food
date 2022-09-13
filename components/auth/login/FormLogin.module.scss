@@ -20,7 +20,7 @@
   @include d-flex;
   font-family: "Roboto", sans-serif;
   position: relative;
-  width: 280px;
+  width: 284px;
   height: 48px;
   font-size: 1.5rem;
   font-weight: 500;
@@ -112,5 +112,95 @@
         font-weight: 500;
       }
     }
+  }
+}
+
+.login-inputs {
+  @include d-flex;
+  flex-direction: column;
+  -webkit-flex-direction: column;
+  margin-top: 20px;
+}
+
+.login-input {
+  font-size: 1.5rem;
+  width: 280px;
+  // height: 44px;
+  padding-left: 16px;
+}
+
+.btn-submit {
+  font-size: 1.6rem;
+  min-width: 310px;
+  height: 44px;
+  border-radius: 30px;
+  margin-top: 45px;
+}
+
+.login-options {
+  position: absolute;
+  top: 56%;
+  @include center;
+  @include d-flex;
+  flex-direction: column;
+  margin-top: 16px;
+}
+
+.login-option--email {
+  position: relative;
+  @include d-flex;
+  justify-content: space-between;
+  width: 280px;
+  height: 44px;
+  margin: 0 auto;
+  border-radius: 30px;
+  border: 0.2rem solid #dce0e3;
+  user-select: none;
+  cursor: pointer;
+
+  & img {
+    width: 2.4rem !important;
+    height: 2.4rem !important;
+    margin-left: 8px !important;
+    margin-right: 20px !important;
+  }
+
+  & span {
+    position: relative;
+    color: $primary-black-color;
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-align: start;
+    margin-right: 50px;
+  }
+}
+
+.login-option--google {
+  position: relative;
+  @include d-flex;
+  justify-content: space-between;
+  width: 280px;
+  height: 44px;
+  margin: 0 auto;
+  border-radius: 30px;
+  border: 0.2rem solid #dce0e3;
+  user-select: none;
+  margin: 16px 0;
+  cursor: pointer;
+
+  & img {
+    width: 2.4rem !important;
+    height: 2.4rem !important;
+    margin-left: 8px !important;
+    margin-right: 20px !important;
+  }
+
+  & span {
+    position: relative;
+    color: $primary-black-color;
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-align: start;
+    margin-right: 87px;
   }
 }

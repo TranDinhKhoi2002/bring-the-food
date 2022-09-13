@@ -1,5 +1,28 @@
+import React from "react";
 import { TextField } from "@mui/material";
 import { useController } from "react-hook-form";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles({
+  inputField: {
+    height: "40px",
+    margin: "25px 0",
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "10px !important",
+      margin: "4px 0",
+    },
+
+    "& .MuiInputLabel-root": {
+      fontSize: "1.25rem !important",
+    },
+
+    "& .MuiFormHelperText-root": {
+      fontSize: "1.2rem !important",
+      maxWidth: "280px",
+      lineHeight: "0.6rem !important",
+    },
+  },
+});
 
 function InputField({
   name,
@@ -7,8 +30,11 @@ function InputField({
   placeholder,
   control,
   type,
+  register,
   ...inputProps
 }) {
+  const classes = useStyles();
+
   const {
     field: { value, ref, onChange, onBlur },
     fieldState: { invalid, error },
@@ -16,7 +42,7 @@ function InputField({
 
   return (
     <TextField
-      className="wrapper"
+      className={classes.inputField}
       id={name}
       name={name}
       size="medium"
@@ -31,6 +57,7 @@ function InputField({
       inputProps={inputProps}
       variant="outlined"
       type={type}
+      {...register(`${name}`)}
     />
   );
 }
