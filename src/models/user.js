@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
-import { Schema } from "mongoose";
+import mongoose, { Schema, model, models } from "mongoose";
 
 const userSchema = new Schema({
   username: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -14,7 +14,7 @@ const userSchema = new Schema({
     items: [
       {
         productId: {
-          productId: Schema.Types.ObjectId,
+          type: Schema.Types.ObjectId,
           ref: "Product",
           required: true,
         },
@@ -29,4 +29,6 @@ const userSchema = new Schema({
   resetTokenExpiration: Date,
 });
 
-export default mongoose.model("User", userSchema);
+const User = models.User || model("User", userSchema);
+
+export default User;

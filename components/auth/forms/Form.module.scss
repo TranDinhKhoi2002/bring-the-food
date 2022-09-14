@@ -1,0 +1,30 @@
+@mixin d-flex {
+  display: flex;
+  align-items: center;
+  display: -webkit-flex;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+}
+
+.login-inputs {
+  @include d-flex;
+  flex-direction: column;
+  -webkit-flex-direction: column;
+  margin-top: 20px;
+}
+
+.login-input {
+  font-size: 1.5rem;
+  width: 280px;
+  // height: 44px;
+  padding-left: 16px;
+}
+
+.btn-submit {
+  font-size: 1.6rem;
+  min-width: 310px;
+  height: 44px;
+  border-radius: 30px;
+  margin-top: 45px;
+}
