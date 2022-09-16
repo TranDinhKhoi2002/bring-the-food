@@ -1,0 +1,26 @@
+{
+  "guides": [
+    {
+      "img": "/images/step-1.jpg",
+      "arrow": "/images/arrow-1.png",
+      "info": "Choose Your Favorite"
+    },
+
+    {
+      "img": "/images/step-2.jpg",
+      "arrow": "/images/arrow-2.png",
+      "info": "We Deliver Your Meals"
+    },
+
+    {
+      "img": "/images/step-3.jpg",
+      "arrow": "/images/arrow-3.png",
+      "info": "Cash on Delivery"
+    },
+
+    {
+      "img": "/images/step-4.jpg",
+      "info": "Eat And Enjoy"
+    }
+  ]
+}

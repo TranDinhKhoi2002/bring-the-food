@@ -1,9 +1,8 @@
-import { useRef, useState, useLayoutEffect } from "react";
+import { useRef, useState, useLayoutEffect, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "../../../assets/images/logo.png";
 import classNames from "classnames/bind";
 import styles from "./Navbar.module.scss";
 import LogoutButton from "../../auth/logout/LogoutButton";
@@ -37,6 +36,11 @@ function Navbar() {
   const [isShowNav, setIsShowNav] = useState(false);
   const [isShowDialog, setIsShowDialog] = useState(false);
   const [isLogout, setIsLogout] = useState(false);
+  const [domLoaded, setDomLoaded] = useState(false);
+
+  useEffect(() => {
+    setDomLoaded(true);
+  }, []);
 
   const router = useRouter();
 
@@ -59,12 +63,13 @@ function Navbar() {
     });
   });
 
-  let nameGg, imageGg, nameFb, imageFb;
+  let nameGg, imageGg, nameFb, imageFb, username;
   if (typeof window !== "undefined") {
     nameGg = localStorage.getItem("nameGg");
     imageGg = localStorage.getItem("imageGg");
     nameFb = localStorage.getItem("nameFb");
     imageFb = localStorage.getItem("imageFb");
+    username = localStorage.getItem("username");
   }
 
   const dispatch = useDispatch();
@@ -100,223 +105,249 @@ function Navbar() {
           boxShadow: "unset !important",
         }}
       >
-        <Container maxWidth="lg">
-          <Toolbar disableGutters>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
-            >
-              <Link href="/">
-                <div className={cx("logo")}>
-                  <Image src={logo} alt="logo" width={100} height={100} />
-                </div>
-              </Link>
-            </Typography>
-
-            <Box>
-              <MenuIcon
-                sx={{
-                  fontSize: 28,
-                  display: { xs: "block", md: "none" },
-                  cursor: "pointer",
-                }}
-                onClick={toggleNavBarHandler}
-              />
-            </Box>
-
-            {/* Navbar mobile */}
-            <div className={cx("nav")}>
-              <div
-                className={cx("nav__content", `${isShowNav ? "active" : ""}`)}
+        {domLoaded && (
+          <Container maxWidth="lg">
+            <Toolbar disableGutters>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
               >
-                <div className={cx("nav__top")}>
-                  <div className={cx("nav__account")}>
-                    {nameGg || nameFb ? (
-                      <div className={cx("d-flex")}>
-                        <Avatar
-                          src={imageGg || imageFb}
-                          className={cx("nav__icon")}
-                        />
-                        <p className={cx("nav__username")}>
-                          {nameGg || nameFb}
-                        </p>
-                      </div>
-                    ) : (
-                      <div onClick={loginHandler}>
-                        <Avatar src="" className={cx("nav__icon")} />
-                      </div>
-                    )}
-                  </div>
-                  <div>
-                    <CloseIcon
-                      sx={{
-                        fontSize: 28,
-                        paddingRight: "10px !important",
-                        cursor: "pointer",
-                      }}
-                      onClick={toggleNavBarHandler}
+                <Link href="/">
+                  <div className={cx("logo")}>
+                    <Image
+                      src="/images/logo.png"
+                      alt="logo"
+                      width={100}
+                      height={100}
                     />
                   </div>
-                </div>
+                </Link>
+              </Typography>
 
-                <ul className={cx("nav__list")}>
-                  <Link href="/">
-                    <li className={cx("nav__item")}>
-                      <HomeIcon sx={{ fontSize: 28 }} />
-                      Home
-                    </li>
-                  </Link>
+              <Box>
+                <MenuIcon
+                  sx={{
+                    fontSize: 28,
+                    display: { xs: "block", md: "none" },
+                    cursor: "pointer",
+                  }}
+                  onClick={toggleNavBarHandler}
+                />
+              </Box>
 
-                  <Link href="/popular-food">
-                    <li className={cx("nav__item")}>
-                      <RestaurantMenuIcon sx={{ fontSize: 28 }} />
-                      Order online
-                    </li>
-                  </Link>
-
-                  <Link href="/review">
-                    <li className={cx("nav__item")}>
-                      <ReviewsIcon sx={{ fontSize: 28 }} />
-                      Review
-                    </li>
-                  </Link>
-
-                  {(nameGg || nameFb) && (
-                    <div className={cx("nav__item")}>
-                      <LogoutIcon sx={{ fontSize: 28 }} />
-                      Logout
-                      <LogoutButton type={nameGg ? "gg" : "fb"} />
-                    </div>
-                  )}
-                </ul>
-              </div>
-            </div>
-
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{
-                flexGrow: 1,
-                display: { xs: "flex", md: "none" },
-                justifyContent: { xs: "center" },
-              }}
-            >
-              <Link href="/">
-                <div className={cx("logo")}>
-                  <Image src={logo} alt="logo" width={100} height={100} />
-                </div>
-              </Link>
-            </Typography>
-
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              <Link href="/">
-                <Button className={cx("button-nav")}>
-                  <HomeIcon sx={{ fontSize: 28 }} />
-                  <Typography
-                    variant="h6"
-                    sx={{ paddingLeft: 1, lineHeight: "1.8rem" }}
-                  >
-                    Home
-                  </Typography>
-                </Button>
-              </Link>
-
-              <Link href="/popular-food">
-                <Button className={cx("button-nav")}>
-                  <RestaurantMenuIcon sx={{ fontSize: 28 }} />
-                  <Typography
-                    variant="h6"
-                    sx={{ paddingLeft: 1, lineHeight: "1.8rem" }}
-                  >
-                    Order Online
-                  </Typography>
-                </Button>
-              </Link>
-
-              <Link href="/review">
-                <Button className={cx("button-nav")}>
-                  <ReviewsIcon sx={{ fontSize: 28 }} />
-                  <Typography
-                    variant="h6"
-                    sx={{ paddingLeft: 1, lineHeight: "1.8rem" }}
-                  >
-                    Reviews
-                  </Typography>
-                </Button>
-              </Link>
-            </Box>
-
-            <Box
-              className={cx("shopping-cart", "navbar__cart")}
-              onClick={showCartHandler}
-            >
-              <ShoppingCartIcon />
-              <Box className={cx("navbar__cart-amount")}>{foodById.length}</Box>
-            </Box>
-
-            <Box
-              className={cx("navbar__account")}
-              sx={{ flexGrow: 0, position: "relative" }}
-            >
-              {nameGg || nameFb ? (
-                <Box sx={{ display: "flex", alignItems: "center" }}>
-                  <Tooltip title="Settings">
-                    <IconButton sx={{ p: 0 }}>
-                      <Avatar src={imageGg || imageFb} alt="Avatar" />
-                    </IconButton>
-                  </Tooltip>
-                  <Typography
-                    variant="h6"
-                    sx={{ fontSize: "1.5rem", fontWeight: 600, paddingLeft: 1 }}
-                  >
-                    {nameGg || nameFb}
-                  </Typography>
-                </Box>
-              ) : (
-                <Box
-                  onClick={loginHandler}
-                  sx={{ display: "flex", alignItems: "center" }}
+              {/* Navbar mobile */}
+              <div className={cx("nav")}>
+                <div
+                  className={cx("nav__content", `${isShowNav ? "active" : ""}`)}
                 >
-                  <Tooltip title="Login">
-                    <IconButton sx={{ p: 0 }}>
-                      <Avatar alt="Avatar" />
-                    </IconButton>
-                  </Tooltip>
-                  <Typography
-                    variant="h6"
-                    sx={{ fontSize: "1.5rem", fontWeight: 600, paddingLeft: 1 }}
-                  >
-                    Sign In
-                  </Typography>
+                  <div className={cx("nav__top")}>
+                    <div className={cx("nav__account")}>
+                      {nameGg || nameFb ? (
+                        <div className={cx("d-flex")}>
+                          <Avatar
+                            src={imageGg || imageFb}
+                            className={cx("nav__icon")}
+                          />
+                          <p className={cx("nav__username")}>
+                            {nameGg || nameFb}
+                          </p>
+                        </div>
+                      ) : (
+                        <div onClick={loginHandler}>
+                          <Avatar src="" className={cx("nav__icon")} />
+                        </div>
+                      )}
+                    </div>
+                    <div>
+                      <CloseIcon
+                        sx={{
+                          fontSize: 28,
+                          paddingRight: "10px !important",
+                          cursor: "pointer",
+                        }}
+                        onClick={toggleNavBarHandler}
+                      />
+                    </div>
+                  </div>
+
+                  <ul className={cx("nav__list")}>
+                    <Link href="/">
+                      <li className={cx("nav__item")}>
+                        <HomeIcon sx={{ fontSize: 28 }} />
+                        Home
+                      </li>
+                    </Link>
+
+                    <Link href="/popular-food">
+                      <li className={cx("nav__item")}>
+                        <RestaurantMenuIcon sx={{ fontSize: 28 }} />
+                        Order online
+                      </li>
+                    </Link>
+
+                    <Link href="/review">
+                      <li className={cx("nav__item")}>
+                        <ReviewsIcon sx={{ fontSize: 28 }} />
+                        Review
+                      </li>
+                    </Link>
+
+                    {(nameGg || nameFb) && (
+                      <div className={cx("nav__item")}>
+                        <LogoutIcon sx={{ fontSize: 28 }} />
+                        Logout
+                        <LogoutButton type={nameGg ? "gg" : "fb"} />
+                      </div>
+                    )}
+                  </ul>
+                </div>
+              </div>
+
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+                sx={{
+                  flexGrow: 1,
+                  display: { xs: "flex", md: "none" },
+                  justifyContent: { xs: "center" },
+                }}
+              >
+                <Link href="/">
+                  <div className={cx("logo")}>
+                    <Image
+                      src="/images/logo.png"
+                      alt="logo"
+                      width={100}
+                      height={100}
+                    />
+                  </div>
+                </Link>
+              </Typography>
+
+              <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+                <Link href="/">
+                  <Button className={cx("button-nav")}>
+                    <HomeIcon sx={{ fontSize: 28 }} />
+                    <Typography
+                      variant="h6"
+                      sx={{ paddingLeft: 1, lineHeight: "1.8rem" }}
+                    >
+                      Home
+                    </Typography>
+                  </Button>
+                </Link>
+
+                <Link href="/popular-food">
+                  <Button className={cx("button-nav")}>
+                    <RestaurantMenuIcon sx={{ fontSize: 28 }} />
+                    <Typography
+                      variant="h6"
+                      sx={{ paddingLeft: 1, lineHeight: "1.8rem" }}
+                    >
+                      Order Online
+                    </Typography>
+                  </Button>
+                </Link>
+
+                <Link href="/review">
+                  <Button className={cx("button-nav")}>
+                    <ReviewsIcon sx={{ fontSize: 28 }} />
+                    <Typography
+                      variant="h6"
+                      sx={{ paddingLeft: 1, lineHeight: "1.8rem" }}
+                    >
+                      Reviews
+                    </Typography>
+                  </Button>
+                </Link>
+              </Box>
+
+              <Box
+                className={cx("shopping-cart", "navbar__cart")}
+                onClick={showCartHandler}
+              >
+                <ShoppingCartIcon />
+                <Box className={cx("navbar__cart-amount")}>
+                  {foodById.length}
                 </Box>
-              )}
+              </Box>
 
-              {(nameGg || nameFb) && (
-                <ul className={cx("navbar__account-options")}>
-                  <li className={cx("navbar__account-option")}>
-                    <AccountBoxIcon />
-                    <span>My account</span>
-                  </li>
-
-                  <li className={cx("navbar__account-option")}>
-                    <SellIcon />
-                    <span>My cart</span>
-                  </li>
-
-                  <li
-                    className={cx("navbar__account-option")}
-                    onClick={() => setIsLogout((prevState) => !prevState)}
+              <Box
+                className={cx("navbar__account")}
+                sx={{ flexGrow: 0, position: "relative" }}
+              >
+                {nameGg || nameFb || username ? (
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Tooltip title="Settings">
+                      <IconButton sx={{ p: 0 }}>
+                        <Avatar src={imageGg || imageFb} alt="Avatar" />
+                      </IconButton>
+                    </Tooltip>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontSize: "1.5rem",
+                        fontWeight: 600,
+                        paddingLeft: 1,
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                      }}
+                    >
+                      {nameGg || nameFb || username}
+                    </Typography>
+                  </Box>
+                ) : (
+                  <Box
+                    onClick={loginHandler}
+                    sx={{ display: "flex", alignItems: "center" }}
                   >
-                    <LogoutButton type={nameGg ? "gg" : "fb"} />
-                  </li>
-                </ul>
-              )}
-            </Box>
-          </Toolbar>
-        </Container>
+                    <Tooltip title="Login">
+                      <IconButton sx={{ p: 0 }}>
+                        <Avatar alt="Avatar" />
+                      </IconButton>
+                    </Tooltip>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        fontSize: "1.5rem",
+                        fontWeight: 600,
+                        paddingLeft: 1,
+                      }}
+                    >
+                      Sign In
+                    </Typography>
+                  </Box>
+                )}
+
+                {(nameGg || nameFb || username) && (
+                  <ul className={cx("navbar__account-options")}>
+                    <li className={cx("navbar__account-option")}>
+                      <AccountBoxIcon />
+                      <span>My account</span>
+                    </li>
+
+                    <li className={cx("navbar__account-option")}>
+                      <SellIcon />
+                      <span>My cart</span>
+                    </li>
+
+                    <li
+                      className={cx("navbar__account-option")}
+                      onClick={() => setIsLogout((prevState) => !prevState)}
+                    >
+                      <LogoutButton
+                        type={nameGg ? "gg" : nameFb ? "fb" : "email"}
+                      />
+                    </li>
+                  </ul>
+                )}
+              </Box>
+            </Toolbar>
+          </Container>
+        )}
       </AppBar>
       <Dialog isShow={isShowDialog} onSetDialog={setIsShowDialog} />
       {isShowNav && <Box className="overlay" onClick={toggleNavBarHandler} />}

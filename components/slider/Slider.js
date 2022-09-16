@@ -1,7 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from "swiper";
 import Link from "next/link";
-import { sliderInfo } from "../../src/constants/sliderInfo";
 import classNames from "classnames/bind";
 import styles from "./Slider.module.scss";
 import "swiper/css";
@@ -13,7 +12,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
 const cx = classNames.bind(styles);
 
-function Slider() {
+function Slider({ mainSlider }) {
   return (
     <Swiper
       modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
@@ -23,11 +22,11 @@ function Slider() {
       pagination={{ clickable: true }}
       autoplay={true}
     >
-      {sliderInfo.map((slider, index) => (
+      {mainSlider.map((slider, index) => (
         <SwiperSlide key={index}>
           <div
             className={cx("background")}
-            style={{ backgroundImage: `url('${slider.img.src}')` }}
+            style={{ backgroundImage: `url('${slider.img}')` }}
           />
           <Grid container sx={{ maxWidth: 1200, margin: "0 auto !important" }}>
             <div className={cx("content")}>

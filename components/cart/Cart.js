@@ -6,7 +6,6 @@ import { cartActions, selectIsShowCart } from "../../src/store/cart";
 import { foodActions, selectFoodById } from "../../src/store/food";
 import classNames from "classnames/bind";
 import styles from "./Cart.module.scss";
-import emptyCartImg from "../../assets/images/empty_cart.png";
 
 import { Box, Grid, Typography, Divider, Button } from "@mui/material";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
@@ -100,7 +99,7 @@ function Cart() {
               {foodById.length <= 0 && (
                 <Box className={cx("empty-cart")}>
                   <Image
-                    src={emptyCartImg.src}
+                    src="/images/empty_cart.png"
                     className={cx("empty-img")}
                     width={300}
                     height={300}

@@ -1,0 +1,22 @@
+{
+  "sliders": [
+    {
+      "img": "/images/slider1.jpg",
+      "title": "ENJOY YOUR ME",
+      "desc": "Good food is wise",
+      "subDesc": "medicine"
+    },
+    {
+      "img": "/images/slider2.jpg",
+      "title": "HAPPY YOUR SPECIAL",
+      "desc": "Love at first",
+      "subDesc": "bite"
+    },
+    {
+      "img": "/images/slider3.jpg",
+      "title": "GOOD FOOD IS GOOD MOOD",
+      "desc": "The belly rules the",
+      "subDesc": "mind"
+    }
+  ]
+}

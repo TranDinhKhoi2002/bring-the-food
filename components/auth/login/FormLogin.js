@@ -5,15 +5,10 @@ import { useGoogleLogin } from "react-google-login";
 import FacebookLogin from "react-facebook-login";
 import classNames from "classnames/bind";
 import styles from "./FormLogin.module.scss";
-import bannerFood from "../../../assets/images/banner_food.png";
-import personalImg from "../../../assets/images/personal.svg";
-import googleImg from "../../../assets/images/google.svg";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import { refreshToken } from "../../../src/utils/refreshToken";
-import NotiToast from "../../ui/notification/NotiToast";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import Login from "../forms/Login";
 import Signup from "../forms/Signup";
 import LoginLogoIcon from "../../ui/icons/LoginLogoIcon";
@@ -77,7 +72,6 @@ function FormLogin() {
 
   // Remember to modify this logic
   const responseFacebook = (res) => {
-    console.log(res);
     localStorage.setItem("nameFb", res.name);
     localStorage.setItem("imageFb", res.picture.data.url);
     router.replace("/");
@@ -95,24 +89,11 @@ function FormLogin() {
     }
   };
 
-  const showToast = (title, desc, success) => {
-    return toast(<NotiToast title={title} desc={desc} success={success} />, {
-      position: toast.POSITION.TOP_RIGHT,
-      className: cx("toast-wrapper"),
-      closeButton: (
-        <div style={{ position: "absolute", top: 8, right: 8, color: "#fff" }}>
-          <ExitToAppIcon sx={{ width: "2rem", height: "2rem" }} />
-        </div>
-      ),
-      autoClose: 3000,
-    });
-  };
-
   return (
     <div
       className={cx("form-login")}
       style={{
-        backgroundImage: `url('${bannerFood.src}')`,
+        backgroundImage: `url('/images/banner_food.png')`,
       }}
     >
       <div className={cx("box")}>
@@ -124,6 +105,7 @@ function FormLogin() {
             left: "20px",
             color: "#1976d2",
             fontSize: "2.6rem",
+            cursor: "pointer",
           }}
         />
         <div className={cx("box-main")}>
@@ -148,21 +130,21 @@ function FormLogin() {
         {optionsIsShow && (
           <div className={cx("login-options")}>
             <div
-              className={cx("login-option--email")}
+              className={cx("login-option")}
               onClick={handleShowLoginEmailPhone}
             >
               <Image
-                src={personalImg.src}
+                src="/images/personal.svg"
                 width={100}
                 height={100}
                 alt="Personal image"
               />
-              <span>Email Or Phone Number</span>
+              <span>Login With Email</span>
             </div>
 
-            <div className={cx("login-option--google")} onClick={signIn}>
+            <div className={cx("login-option")} onClick={signIn}>
               <Image
-                src={googleImg.src}
+                src="/images/google.svg"
                 width={100}
                 height={100}
                 alt="Google image"
@@ -196,7 +178,6 @@ function FormLogin() {
           </div>
         )}
       </div>
-      {/* <button onClick={() => showToast("aaaaa", "aaaa", true)}>Click</button> */}
       <ToastContainer />
     </div>
   );

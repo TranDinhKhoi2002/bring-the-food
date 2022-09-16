@@ -1,0 +1,56 @@
+.intro-title {
+  font-size: 3rem;
+  color: #fbb403;
+  text-align: center;
+}
+
+.intro-desc {
+  font-size: 2.8rem;
+  margin-top: 5px;
+  color: rgba(0, 0, 0, 0.84);
+  text-align: center;
+}
+
+.intro-guide {
+  position: relative;
+  text-align: center;
+}
+
+.intro-step {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  font-size: 1.4rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: 5px solid white;
+  padding: 10px;
+  text-align: center;
+  color: white;
+  background-color: #ff514e;
+  transition: all 0.25s ease;
+}
+
+.intro-infor {
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin: 10px 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    color: #ff514e;
+  }
+}
+
+.intro-arrow {
+  position: absolute;
+  top: 50%;
+  left: 84%;
+  transform: translateY(-100%);
+  background-repeat: no-repeat;
+  height: 2.8rem;
+  width: 9rem;
+}

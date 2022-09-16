@@ -2,9 +2,10 @@ import { useRouter } from "next/router";
 import { useGoogleLogout } from "react-google-login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import styles from "./LogoutButton.module.scss";
+import { useState, useEffect } from "react";
 
 const clientId =
-  "28621200637-lrridduvsj91kgdmnrb7kugcpk4qnnpk.apps.googleusercontent.com";
+  "28621200637-b33nlbjs4h5rpl5fp3d8tkdc3utp87fe.apps.googleusercontent.com";
 
 function LogoutButton({ type }) {
   const router = useRouter();
@@ -20,7 +21,11 @@ function LogoutButton({ type }) {
   };
 
   const onFailure = () => {
-    alert("Logout failed!");
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    console.log("failed");
   };
 
   const { signOut } = useGoogleLogout({
@@ -34,9 +39,15 @@ function LogoutButton({ type }) {
     localStorage.removeItem("nameFb");
   };
 
+  const emailLogout = () => {
+    localStorage.removeItem("username");
+  };
+
   return (
     <button
-      onClick={type === "gg" ? signOut : facebookLogout}
+      onClick={
+        type === "gg" ? signOut : type === "fb" ? facebookLogout : emailLogout
+      }
       className={styles.wrapper}
     >
       <LogoutIcon />

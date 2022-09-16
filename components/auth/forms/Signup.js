@@ -2,7 +2,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@mui/material";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import InputField from "../../ui/input/InputField";
 import classNames from "classnames/bind";
 import styles from "./Form.module.scss";
@@ -60,53 +60,63 @@ function Signup(props) {
     const data = await res.json();
 
     if (res.status === 422) {
-      return toast.error(data.message, {
-        autoClose: 3000,
-      });
+      return toast(
+        <NotiToast title={"Sign Up"} desc={data.message} success={false} />,
+        {
+          position: toast.POSITION.TOP_RIGHT,
+          className: cx("toast-wrapper"),
+          closeButton: (
+            <div
+              style={{ position: "absolute", top: 8, right: 8, color: "#fff" }}
+            >
+              <ExitToAppIcon sx={{ width: "2rem", height: "2rem" }} />
+            </div>
+          ),
+          autoClose: 3000,
+        }
+      );
     }
   };
 
   return (
-    <>
-      <form
-        className={cx("login-inputs")}
-        onSubmit={handleSubmit(handleSubmitForm)}
-      >
-        <InputField
-          className={cx("login-input")}
-          name="email"
-          type="email"
-          label="Email Address"
-          control={control}
-          placeholder="Email/Phone Number"
-          register={register}
-        />
+    <form
+      className={cx("login-inputs")}
+      onSubmit={handleSubmit(handleSubmitForm)}
+    >
+      <InputField
+        className={cx("login-input")}
+        name="email"
+        type="email"
+        label="Email Address"
+        control={control}
+        placeholder="Email/Phone Number"
+        register={register}
+      />
 
-        <InputField
-          className={cx("login-input")}
-          name="password"
-          type="password"
-          label="Password"
-          control={control}
-          placeholder="Enter your password"
-          register={register}
-        />
+      <InputField
+        className={cx("login-input")}
+        name="password"
+        type="password"
+        label="Password"
+        control={control}
+        placeholder="Enter your password"
+        register={register}
+      />
 
-        <InputField
-          className={cx("login-input")}
-          name="confirmPassword"
-          type="password"
-          label="Confirm Password"
-          control={control}
-          placeholder="Confirm your password"
-          register={register}
-        />
+      <InputField
+        className={cx("login-input")}
+        name="confirmPassword"
+        type="password"
+        label="Confirm Password"
+        control={control}
+        placeholder="Confirm your password"
+        register={register}
+      />
 
-        <Button className={cx("btn-submit")} type="submit" variant="contained">
-          Submit
-        </Button>
-      </form>
-    </>
+      <Button className={cx("btn-submit")} type="submit" variant="contained">
+        Submit
+      </Button>
+    </form>
   );
 }
 
