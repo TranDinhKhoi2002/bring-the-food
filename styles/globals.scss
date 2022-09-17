@@ -105,3 +105,38 @@ h6 {
   background-color: $scrollbar-color;
   background-clip: content-box;
 }
+
+.prev-btn,
+.next-btn {
+  position: absolute;
+  top: 34%;
+  z-index: 10;
+  box-shadow: 0 1px 13px rgba(0, 0, 0, 0.08);
+  min-width: 3.5rem;
+  min-height: 3.5rem;
+
+  &:hover {
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    background-color: $primary-red-color;
+  }
+
+  svg {
+    fill: rgba($primary-black-color, 0.7);
+  }
+
+  &:hover svg {
+    fill: $primary-white-color;
+  }
+
+  @include respond(mobile) {
+    display: none;
+  }
+}
+
+.prev-btn {
+  left: 7px;
+}
+
+.next-btn {
+  right: 7px;
+}

@@ -6,8 +6,6 @@ import Image from "next/image";
 const cx = classNames.bind(styles);
 
 function Intro({ guides }) {
-  console.log(guides);
-
   return (
     <Box maxWidth="lg" sx={{ margin: "60px auto" }}>
       <Box>

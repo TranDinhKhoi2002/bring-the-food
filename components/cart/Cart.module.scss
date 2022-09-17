@@ -9,7 +9,12 @@
   height: 100vh;
   background-color: $primary-white-color;
   z-index: 200;
-  animation: fadeInRight 0.3s ease-in-out;
+  transform: translateX(100%);
+  transition: all 0.3s ease-in-out;
+
+  &.active {
+    transform: translateX(0%);
+  }
 
   @include respond(mobile) {
     width: 100%;
@@ -126,5 +131,17 @@
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+@keyframes fadeOutRight {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(100%);
   }
 }

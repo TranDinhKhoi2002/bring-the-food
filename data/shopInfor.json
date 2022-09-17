@@ -1,0 +1,25 @@
+{
+  "foodTypes": [
+    {
+      "img": "/images/burger.svg",
+      "name": "Burgers"
+    },
+    {
+      "img": "/images/bread.svg",
+      "name": "Breads"
+    },
+    {
+      "img": "/images/sandwich.svg",
+      "name": "Sandwiches"
+    },
+    {
+      "img": "/images/drinks.svg",
+      "name": "Drinks"
+    },
+    {
+      "img": "/images/pizza.svg",
+      "name": "Pizzas"
+    }
+  ],
+  "priceOptions": ["Above $100", "Under $100", "$50 to $100", "Under $50"]
+}

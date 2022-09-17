@@ -1,0 +1,40 @@
+{
+  "sliders": [
+    {
+      "img": "/images/burgerBreakfast.svg",
+      "name": "breakfast"
+    },
+    {
+      "img": "/images/coffee.svg",
+      "name": "coffee"
+    },
+    {
+      "img": "/images/pork.svg",
+      "name": "pork ham"
+    },
+    {
+      "img": "/images/dinner.svg",
+      "name": "dinner"
+    },
+    {
+      "img": "/images/tea.svg",
+      "name": "tea"
+    },
+    {
+      "img": "/images/lunch.svg",
+      "name": "lunch"
+    },
+    {
+      "img": "/images/juice.svg",
+      "name": "juice"
+    },
+    {
+      "img": "/images/chicken.svg",
+      "name": "grilled chicken"
+    },
+    {
+      "img": "/images/beef.svg",
+      "name": "roast beef"
+    }
+  ]
+}

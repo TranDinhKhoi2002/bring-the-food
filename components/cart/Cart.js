@@ -51,96 +51,94 @@ function Cart() {
 
   return (
     <>
-      {isShowCart && (
-        <div className={cx("box")}>
+      <div className={cx("box", `${isShowCart ? "active" : ""}`)}>
+        <Box>
           <Box>
-            <Box>
-              <Grid container alignItems="center" sx={{ p: 1.6 }}>
-                <Grid item xs>
-                  <Typography
-                    className={cx("heading")}
-                    gutterBottom
-                    variant="h4"
-                    component="div"
-                    sx={{ fontSize: { md: "2.6rem", xs: "2rem" } }}
-                  >
-                    Your Cart
-                  </Typography>
-                </Grid>
-
-                <Grid item>
-                  <CancelPresentationIcon
-                    className={cx("btn-close")}
-                    onClick={handleHideCart}
-                  />
-                </Grid>
+            <Grid container alignItems="center" sx={{ p: 1.6 }}>
+              <Grid item xs>
+                <Typography
+                  className={cx("heading")}
+                  gutterBottom
+                  variant="h4"
+                  component="div"
+                  sx={{ fontSize: { md: "2.6rem", xs: "2rem" } }}
+                >
+                  Your Cart
+                </Typography>
               </Grid>
 
-              <Divider />
+              <Grid item>
+                <CancelPresentationIcon
+                  className={cx("btn-close")}
+                  onClick={handleHideCart}
+                />
+              </Grid>
+            </Grid>
 
-              <div className={cx("box-main")}>
-                {foodById.map((food, index) => (
-                  <Box key={index} className={cx("box-food")} sx={{ p: 1.6 }}>
-                    <Image src={food.img} alt={food.name} />
-                    <Box className={cx("box-title")}>
-                      <Typography variant="h5">{food.name}</Typography>
-                      <Typography variant="body1">{`$${food.price}`}</Typography>
-                    </Box>
-                    <Box
-                      className={cx("delete-icon")}
-                      onClick={() => handleRemoveFoodById(food.id)}
-                    >
-                      <DeleteIcon />
-                    </Box>
+            <Divider />
+
+            <div className={cx("box-main")}>
+              {foodById.map((food, index) => (
+                <Box key={index} className={cx("box-food")} sx={{ p: 1.6 }}>
+                  <Image src={food.img} alt={food.name} />
+                  <Box className={cx("box-title")}>
+                    <Typography variant="h5">{food.name}</Typography>
+                    <Typography variant="body1">{`$${food.price}`}</Typography>
                   </Box>
-                ))}
-              </div>
-
-              {foodById.length <= 0 && (
-                <Box className={cx("empty-cart")}>
-                  <Image
-                    src="/images/empty_cart.png"
-                    className={cx("empty-img")}
-                    width={300}
-                    height={300}
-                    alt="Empty Cart"
-                  />
-                  <Typography
-                    variant="h4"
-                    sx={{
-                      fontSize: "2rem",
-                      fontWeight: "500",
-                      color: "rgba(0, 0, 0, 0.7)",
-                    }}
+                  <Box
+                    className={cx("delete-icon")}
+                    onClick={() => handleRemoveFoodById(food.id)}
                   >
-                    Your Cart Is Empty
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    onClick={handleBuyNow}
-                    sx={{ marginTop: { md: "16px", xs: "24px" } }}
-                    className={cx("btn-buy")}
-                  >
-                    Buy now
-                  </Button>
+                    <DeleteIcon />
+                  </Box>
                 </Box>
-              )}
-            </Box>
-          </Box>
+              ))}
+            </div>
 
-          {foodById.length > 0 && (
-            <Button
-              onClick={handleShowDialog}
-              fullWidth
-              className={cx("btn-checkout")}
-              variant="contained"
-              sx={{ width: { md: "400px", xs: "280px" } }}
-            >
-              Check out
-            </Button>
-          )}
-        </div>
-      )}
+            {foodById.length <= 0 && (
+              <Box className={cx("empty-cart")}>
+                <Image
+                  src="/images/empty_cart.png"
+                  className={cx("empty-img")}
+                  width={300}
+                  height={300}
+                  alt="Empty Cart"
+                />
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontSize: "2rem",
+                    fontWeight: "500",
+                    color: "rgba(0, 0, 0, 0.7)",
+                  }}
+                >
+                  Your Cart Is Empty
+                </Typography>
+                <Button
+                  variant="contained"
+                  onClick={handleBuyNow}
+                  sx={{ marginTop: { md: "16px", xs: "24px" } }}
+                  className={cx("btn-buy")}
+                >
+                  Buy now
+                </Button>
+              </Box>
+            )}
+          </Box>
+        </Box>
+
+        {foodById.length > 0 && (
+          <Button
+            onClick={handleShowDialog}
+            fullWidth
+            className={cx("btn-checkout")}
+            variant="contained"
+            sx={{ width: { md: "400px", xs: "280px" } }}
+          >
+            Check out
+          </Button>
+        )}
+      </div>
 
       <Dialog isShow={isShowDialog} onSetDialog={setIsShowDialog} />
       {isShowCart && <Box className="overlay" onClick={handleHideCart} />}

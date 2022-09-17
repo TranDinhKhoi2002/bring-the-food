@@ -144,14 +144,14 @@ function Navbar() {
                 >
                   <div className={cx("nav__top")}>
                     <div className={cx("nav__account")}>
-                      {nameGg || nameFb ? (
+                      {nameGg || nameFb || username ? (
                         <div className={cx("d-flex")}>
                           <Avatar
                             src={imageGg || imageFb}
                             className={cx("nav__icon")}
                           />
                           <p className={cx("nav__username")}>
-                            {nameGg || nameFb}
+                            {nameGg || nameFb || username}
                           </p>
                         </div>
                       ) : (

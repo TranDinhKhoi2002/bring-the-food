@@ -5,32 +5,39 @@ import Cart from "../components/cart/Cart";
 import Intro from "../components/intro/Intro";
 import Slider from "../components/slider/Slider";
 import CategorySlider from "../components/slider/CategorySlider";
+import ShopFood from "../components/shop/ShopFood";
 
 function Home(props) {
-  const { guides, mainSlider } = props;
+  const { guides, mainSlider, categorySlider, shopInfor } = props;
   return (
     <>
       <Slider mainSlider={mainSlider} />
       <Cart />
       <Intro guides={guides} />
-      <CategorySlider />
+      <CategorySlider categorySlider={categorySlider} />
+      <ShopFood shopInfor={shopInfor} />
     </>
   );
 }
 
-export async function getStaticProps() {
-  let filePath = path.join(process.cwd(), "data", "guides.json");
-  let jsonData = await fs.readFile(filePath);
-  const guidesData = JSON.parse(jsonData);
+const getDataFromFile = async (fileName) => {
+  const filePath = path.join(process.cwd(), "data", fileName);
+  const jsonData = await fs.readFile(filePath);
+  return JSON.parse(jsonData);
+};
 
-  filePath = path.join(process.cwd(), "data", "mainSlider.json");
-  jsonData = await fs.readFile(filePath);
-  const mainSliderData = JSON.parse(jsonData);
+export async function getStaticProps() {
+  const guidesData = await getDataFromFile("guides.json");
+  const mainSliderData = await getDataFromFile("mainSlider.json");
+  const categorySlider = await getDataFromFile("categorySlider.json");
+  const shopInfor = await getDataFromFile("shopInfor.json");
 
   return {
     props: {
       guides: guidesData.guides,
       mainSlider: mainSliderData.sliders,
+      categorySlider: categorySlider.sliders,
+      shopInfor: shopInfor,
     },
   };
 }
