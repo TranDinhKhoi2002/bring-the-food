@@ -21,6 +21,9 @@ const authSlice = createSlice({
     checkLogin(state, action) {
       state.isLoggedIn = action.payload;
     },
+    logout(state) {
+      state.isLoggedIn = false;
+    },
   },
 });
 

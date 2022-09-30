@@ -1,0 +1,81 @@
+@import "assets/styles/colors";
+@import "assets/styles/mixins";
+
+.actions {
+  display: flex;
+  align-items: center;
+  padding-right: 24px;
+
+  @include respond(mobile) {
+    margin: 0 10px 20px 10px;
+    padding: 0;
+  }
+
+  &-search {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    border-radius: 20px;
+    padding: 5px 10px 5px 15px;
+    margin-left: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+
+    @include respond(mobile) {
+      margin-left: 0;
+    }
+  }
+
+  &-search input {
+    font-size: 1.5rem;
+    outline: none;
+    border: none;
+    width: 100%;
+    height: 100%;
+    background-color: $primary-white-color;
+  }
+
+  &-search-btn {
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    -webkit-align-items: center;
+    width: 3.2rem;
+    height: 3.2rem;
+    margin-left: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    svg {
+      width: 2.3rem;
+      height: 100%;
+      text-align: center;
+      fill: $primary-grey-color;
+    }
+  }
+}
+
+.display-types {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+
+  @include respond(mobile) {
+    display: none;
+  }
+
+  .display-type {
+    width: 3.2rem;
+    height: 3.2rem;
+    fill: rgba(0, 0, 0, 0.45);
+    cursor: pointer;
+
+    &:first-child {
+      margin-right: 5px;
+    }
+
+    &.active {
+      fill: $primary-red-color;
+    }
+  }
+}

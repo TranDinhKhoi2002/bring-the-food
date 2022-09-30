@@ -32,6 +32,14 @@ export async function getStaticProps() {
   const categorySlider = await getDataFromFile("categorySlider.json");
   const shopInfor = await getDataFromFile("shopInfor.json");
 
+  if (!guidesData || !mainSliderData || !categorySlider || !shopInfor) {
+    return {
+      redirect: {
+        destination: "/error",
+      },
+    };
+  }
+
   return {
     props: {
       guides: guidesData.guides,

@@ -1,10 +1,17 @@
+@import "assets/styles/mixins";
+
 .wrapper {
   display: flex;
   align-items: center;
   height: 26.2px;
-  color: rgba(0, 0, 0, 0.84);
+  width: 100%;
+  color: white;
   background-color: transparent;
   padding-left: 0;
   border: none;
   cursor: pointer;
+
+  @include respond(desktop) {
+    color: rgba(0, 0, 0, 0.84);
+  }
 }

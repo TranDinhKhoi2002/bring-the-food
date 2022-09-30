@@ -1,0 +1,129 @@
+import { Box, Pagination } from "@mui/material";
+import Image from "next/image";
+import { FavoriteBorder, Room, ShoppingCart, Star } from "@mui/icons-material";
+import classNames from "classnames/bind";
+import styles from "./ShopProduct.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import { cartActions } from "../../../src/store/cart";
+import foodApi from "../../../src/api/foodApi";
+import { foodActions, selectFoodFilter } from "../../../src/store/food";
+import { makeStyles } from "@mui/styles";
+
+const cx = classNames.bind(styles);
+
+const useStyles = makeStyles({
+  pagination: {
+    "& .Mui-selected": {
+      backgroundColor: "#ff514e",
+      color: "white",
+
+      "&:hover": {
+        backgroundColor: "#f73835",
+      },
+    },
+  },
+});
+
+function ShopProduct({ foods, getFoodById }) {
+  const filter = useSelector(selectFoodFilter);
+  const dispatch = useDispatch();
+
+  const styles = useStyles();
+
+  const handleAddToCart = async (foodId) => {
+    const selectedFood = await foodApi.getFoodById(foodId);
+    dispatch(cartActions.addToCart({ food: selectedFood, amount: 1 }));
+  };
+
+  const handlePagitionChange = (event, value) => {
+    dispatch(foodActions.setFilter({ ...filter, _page: value }));
+  };
+
+  return (
+    <Box>
+      {foods.length > 0 ? (
+        <div>
+          <div className={cx("products")}>
+            {foods.map((food, index) => (
+              <div key={index} className={cx("product")}>
+                <div
+                  className={cx("product-main")}
+                  onClick={() => getFoodById(food.id)}
+                >
+                  <div className={cx("product-img-wrapper")}>
+                    <div className={cx("product-img-container")}>
+                      <Image
+                        src={food.img}
+                        className={cx("product-img")}
+                        alt={food.name}
+                        layout="fill"
+                      />
+                    </div>
+                    <div className={cx("product-rate")}>
+                      <Star />
+                      <span>{food.rate}</span>
+                    </div>
+                  </div>
+
+                  <div className={cx("product-content")}>
+                    <h2 className={cx("product-name")} title={food.name}>
+                      {food.name}
+                    </h2>
+                    <p className={cx("product-desc")}>{food.dsc}</p>
+                    <div className={cx("product-row")}>
+                      <div className={cx("product-location")}>
+                        <Room />
+                        <span>{food.country}</span>
+                      </div>
+                      <div
+                        className={cx("product-price")}
+                      >{`$${food.price}`}</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className={cx("product-buttons")}>
+                  <div className={cx("product-button")}>
+                    <FavoriteBorder />
+                  </div>
+                  <div
+                    className={cx("product-button")}
+                    onClick={() => {
+                      handleAddToCart(food.id);
+                    }}
+                  >
+                    <ShoppingCart />
+                  </div>
+                </div>
+
+                <div className={cx("product-label")}>Favourite</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : (
+        <div className={cx("product-empty")}>
+          <Image
+            src="/images/empty-shop.svg"
+            width={400}
+            height={400}
+            alt="There is no foods"
+          />
+          <div>There is no product you are looking for</div>
+        </div>
+      )}
+
+      <div className={cx("pagination")}>
+        <Pagination
+          count={4}
+          page={filter._page}
+          onChange={handlePagitionChange}
+          shape="rounded"
+          className={styles.pagination}
+        />
+      </div>
+    </Box>
+  );
+}
+
+export default ShopProduct;

@@ -36,7 +36,7 @@ const foodSlice = createSlice({
       state.foods = action.payload;
     },
 
-    fetchSandWichesFood(state, action) {
+    fetchSandwichesFood(state, action) {
       state.foods = action.payload;
     },
 

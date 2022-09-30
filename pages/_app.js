@@ -1,3 +1,4 @@
+import React from "react";
 import Layout from "../components/layout/Layout";
 import "../styles/globals.scss";
 import { Provider } from "react-redux";

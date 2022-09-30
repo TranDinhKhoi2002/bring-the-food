@@ -152,29 +152,27 @@ function FormLogin() {
               <span>Login With Google</span>
             </div>
 
-            {!loginWithFb && (
-              <FacebookLogin
-                appId="418153143755336"
-                autoLoad={false}
-                fields="name,email,picture"
-                scope="public_profile,email,user_friends"
-                callback={responseFacebook}
-                cssClass={cx("btn-login-fb")}
-                icon={
-                  <FacebookIcon
-                    sx={{
-                      position: "absolute",
-                      top: "50%",
-                      left: "2rem",
-                      transform: "translateY(-50%)",
-                      fontSize: "2.4rem",
-                      color: "#4c69ba",
-                      paddingRight: "2rem",
-                    }}
-                  />
-                }
-              />
-            )}
+            <FacebookLogin
+              appId="418153143755336"
+              autoLoad={false}
+              fields="name,email,picture"
+              scope="public_profile,email,user_friends"
+              callback={responseFacebook}
+              cssClass={cx("btn-login-fb")}
+              icon={
+                <FacebookIcon
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "2rem",
+                    transform: "translateY(-50%)",
+                    fontSize: "2.4rem",
+                    color: "#4c69ba",
+                    paddingRight: "2rem",
+                  }}
+                />
+              }
+            />
           </div>
         )}
       </div>

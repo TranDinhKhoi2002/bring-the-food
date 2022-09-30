@@ -7,8 +7,7 @@ import classNames from "classnames/bind";
 import styles from "./Navbar.module.scss";
 import LogoutButton from "../../auth/logout/LogoutButton";
 import Dialog from "../../ui/dialog/Dialog";
-import { selectFoodById } from "../../../src/store/food";
-import { cartActions } from "../../../src/store/cart";
+import { cartActions, selectFoodsFromCart } from "../../../src/store/cart";
 
 import AppBar from "@mui/material/AppBar";
 import Container from "@mui/material/Container";
@@ -40,13 +39,6 @@ function Navbar() {
 
   useEffect(() => {
     setDomLoaded(true);
-  }, []);
-
-  const router = useRouter();
-
-  const ref = useRef(null);
-
-  useLayoutEffect(() => {
     const navbar = ref.current;
     window.addEventListener("scroll", () => {
       if (
@@ -61,7 +53,11 @@ function Navbar() {
         navbar.style.marginTop = "5px";
       }
     });
-  });
+  }, []);
+
+  const router = useRouter();
+
+  const ref = useRef(null);
 
   let nameGg, imageGg, nameFb, imageFb, username;
   if (typeof window !== "undefined") {
@@ -73,7 +69,7 @@ function Navbar() {
   }
 
   const dispatch = useDispatch();
-  const foodById = useSelector(selectFoodById);
+  const cartFoods = useSelector(selectFoodsFromCart);
 
   const toggleNavBarHandler = () => {
     setIsShowNav((prevState) => !prevState);
@@ -194,11 +190,14 @@ function Navbar() {
                       </li>
                     </Link>
 
-                    {(nameGg || nameFb) && (
-                      <div className={cx("nav__item")}>
-                        <LogoutIcon sx={{ fontSize: 28 }} />
-                        Logout
-                        <LogoutButton type={nameGg ? "gg" : "fb"} />
+                    {(nameGg || nameFb || username) && (
+                      <div
+                        className={cx("nav__item")}
+                        onClick={() => setIsLogout(true)}
+                      >
+                        <LogoutButton
+                          type={nameGg ? "gg" : nameFb ? "fb" : "email"}
+                        />
                       </div>
                     )}
                   </ul>
@@ -271,7 +270,7 @@ function Navbar() {
               >
                 <ShoppingCartIcon />
                 <Box className={cx("navbar__cart-amount")}>
-                  {foodById.length}
+                  {cartFoods.length}
                 </Box>
               </Box>
 
@@ -336,7 +335,7 @@ function Navbar() {
 
                     <li
                       className={cx("navbar__account-option")}
-                      onClick={() => setIsLogout((prevState) => !prevState)}
+                      onClick={() => setIsLogout(true)}
                     >
                       <LogoutButton
                         type={nameGg ? "gg" : nameFb ? "fb" : "email"}

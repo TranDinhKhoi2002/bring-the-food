@@ -2,8 +2,11 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cartActions, selectIsShowCart } from "../../src/store/cart";
-import { foodActions, selectFoodById } from "../../src/store/food";
+import {
+  cartActions,
+  selectFoodsFromCart,
+  selectIsShowCart,
+} from "../../src/store/cart";
 import classNames from "classnames/bind";
 import styles from "./Cart.module.scss";
 
@@ -25,7 +28,7 @@ function Cart() {
 
   const dispatch = useDispatch();
   const isShowCart = useSelector(selectIsShowCart);
-  const foodById = useSelector(selectFoodById);
+  const cartFoods = useSelector(selectFoodsFromCart);
 
   const handleHideCart = () => {
     dispatch(cartActions.showCart(false));
@@ -46,7 +49,7 @@ function Cart() {
   };
 
   const handleRemoveFoodById = (id) => {
-    dispatch(foodActions.removeFoodById(id));
+    dispatch(cartActions.removeFromCart(id));
   };
 
   return (
@@ -78,12 +81,17 @@ function Cart() {
             <Divider />
 
             <div className={cx("box-main")}>
-              {foodById.map((food, index) => (
+              {cartFoods.map((food, index) => (
                 <Box key={index} className={cx("box-food")} sx={{ p: 1.6 }}>
-                  <Image src={food.img} alt={food.name} />
+                  <Image
+                    src={food.food.img}
+                    alt={food.food.name}
+                    width={80}
+                    height={80}
+                  />
                   <Box className={cx("box-title")}>
-                    <Typography variant="h5">{food.name}</Typography>
-                    <Typography variant="body1">{`$${food.price}`}</Typography>
+                    <Typography variant="h5">{food.food.name}</Typography>
+                    <Typography variant="body1">{`$${food.food.price}`}</Typography>
                   </Box>
                   <Box
                     className={cx("delete-icon")}
@@ -95,7 +103,7 @@ function Cart() {
               ))}
             </div>
 
-            {foodById.length <= 0 && (
+            {cartFoods.length <= 0 && (
               <Box className={cx("empty-cart")}>
                 <Image
                   src="/images/empty_cart.png"
@@ -127,7 +135,7 @@ function Cart() {
           </Box>
         </Box>
 
-        {foodById.length > 0 && (
+        {cartFoods.length > 0 && (
           <Button
             onClick={handleShowDialog}
             fullWidth
