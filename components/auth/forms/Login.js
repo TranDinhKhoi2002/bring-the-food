@@ -1,5 +1,6 @@
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@mui/material";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
@@ -9,6 +10,7 @@ import styles from "./Form.module.scss";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import NotiToast from "../../ui/notification/NotiToast";
+import { authActions } from "../../../src/store/auth";
 
 const cx = classNames.bind(styles);
 
@@ -31,6 +33,7 @@ function Login(props) {
     resolver: yupResolver(schema),
   });
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleSubmitForm = async () => {
     const [email, password] = getValues(["email", "password"]);
@@ -43,8 +46,10 @@ function Login(props) {
         "Content-Type": "application/json",
       },
     });
+
     if (res.ok) {
       localStorage.setItem("username", email);
+      dispatch(authActions.login());
       router.replace("/");
     } else {
       const data = await res.json();

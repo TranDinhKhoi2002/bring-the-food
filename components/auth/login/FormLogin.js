@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
+import { useDispatch } from "react-redux";
 import { useGoogleLogin } from "react-google-login";
+import Image from "next/image";
 import FacebookLogin from "react-facebook-login";
 import classNames from "classnames/bind";
 import styles from "./FormLogin.module.scss";
@@ -12,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import Login from "../forms/Login";
 import Signup from "../forms/Signup";
 import LoginLogoIcon from "../../ui/icons/LoginLogoIcon";
+import { authActions } from "../../../src/store/auth";
 
 const cx = classNames.bind(styles);
 
@@ -20,10 +22,11 @@ const clientId =
 
 function FormLogin() {
   const [loginWithEmailPhone, setLoginWithEmailPhone] = useState(false);
-  const [loginWithFb, setLoginWithFb] = useState(false);
   const [signup, setSignup] = useState(false);
   const [optionsIsShow, setOptionsIsShow] = useState(true);
   const router = useRouter();
+
+  const dispatch = useDispatch();
 
   const handleHideLoginEmailPhone = () => {
     if (optionsIsShow) {
@@ -51,7 +54,6 @@ function FormLogin() {
     refreshToken(res);
 
     const { name, imageUrl, email } = res.profileObj;
-
     fetch("/api/login", {
       method: "POST",
       body: JSON.stringify({
@@ -62,6 +64,8 @@ function FormLogin() {
         "Content-Type": "application/json",
       },
     });
+
+    dispatch(authActions.login());
 
     localStorage.setItem("nameGg", name);
     localStorage.setItem("imageGg", imageUrl);
@@ -82,6 +86,11 @@ function FormLogin() {
   });
 
   const responseFacebook = async (res) => {
+    if (res.status === "unknown") {
+      alert("Login failed");
+      return;
+    }
+
     localStorage.setItem("nameFb", res.name);
     localStorage.setItem("imageFb", res.picture.data.url);
     localStorage.setItem("email", res.email);
@@ -97,19 +106,8 @@ function FormLogin() {
       },
     });
 
+    dispatch(authActions.login());
     router.replace("/");
-
-    if (res.status === "unknown") {
-      alert("Login failed");
-      setLoginWithFb(false);
-      return;
-    }
-
-    if (res.accessToken) {
-      setLoginWithFb(true);
-    } else {
-      setLoginWithFb(false);
-    }
   };
 
   return (

@@ -91,7 +91,7 @@ function Cart() {
                   />
                   <Box className={cx("box-title")}>
                     <Typography variant="h5">{food.food.name}</Typography>
-                    <Typography variant="body1">{`$${food.food.price}`}</Typography>
+                    <Typography variant="body1">{`$${food.food.price} X ${food.quantity}`}</Typography>
                   </Box>
                   <Box
                     className={cx("delete-icon")}

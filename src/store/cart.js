@@ -13,21 +13,17 @@ const cartSlice = createSlice({
       state.isShowCart = action.payload;
     },
     addToCart(state, action) {
-      const { food: payloadFood, amount: payloadAmount } = action.payload;
+      const { food: payloadFood } = action.payload;
 
       const foodIndex = state.foods.findIndex(
-        (food) => food.id === payloadFood.id
+        (food) => food.food.id === payloadFood.id
       );
 
       if (foodIndex === -1) {
-        const food = { ...action.payload, amount: payloadAmount };
-        state.foods.push(food);
+        state.foods.push({ ...action.payload, quantity: 1 });
       } else {
-        state.foods[foodIndex].amount += payloadAmount;
+        state.foods[foodIndex].quantity++;
       }
-
-      localStorage.removeItem("cart");
-      localStorage.setItem("cart", JSON.stringify(state.foods));
     },
     removeFromCart(state, action) {
       const updatedFoods = state.foods.filter(

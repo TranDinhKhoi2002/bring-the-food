@@ -8,6 +8,9 @@ import { cartActions } from "../../../src/store/cart";
 import foodApi from "../../../src/api/foodApi";
 import { foodActions, selectFoodFilter } from "../../../src/store/food";
 import { makeStyles } from "@mui/styles";
+import Dialog from "../../ui/dialog/Dialog";
+import { useState } from "react";
+import { selectIsLoggedIn } from "../../../src/store/auth";
 
 const cx = classNames.bind(styles);
 
@@ -25,14 +28,32 @@ const useStyles = makeStyles({
 });
 
 function ShopProduct({ foods, getFoodById }) {
+  const [isShowDialog, setIsShowDialog] = useState(false);
   const filter = useSelector(selectFoodFilter);
+
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const styles = useStyles();
 
   const handleAddToCart = async (foodId) => {
+    if (!isLoggedIn) {
+      setIsShowDialog(true);
+      return;
+    }
+
     const selectedFood = await foodApi.getFoodById(foodId);
-    dispatch(cartActions.addToCart({ food: selectedFood, amount: 1 }));
+    dispatch(cartActions.addToCart({ food: selectedFood }));
+    await fetch("/api/addToCart", {
+      method: "POST",
+      body: JSON.stringify({
+        email: localStorage.getItem("email"),
+        food: selectedFood,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   };
 
   const handlePagitionChange = (event, value) => {
@@ -122,6 +143,16 @@ function ShopProduct({ foods, getFoodById }) {
           className={styles.pagination}
         />
       </div>
+
+      <Dialog isShow={isShowDialog} onSetDialog={setIsShowDialog} />
+      {isShowDialog && (
+        <Box
+          className="overlay"
+          onClick={() => {
+            setIsShowDialog(false);
+          }}
+        />
+      )}
     </Box>
   );
 }

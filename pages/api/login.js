@@ -1,7 +1,7 @@
 import { compareSync } from "bcryptjs";
 import User from "../../src/models/user";
 import mongoose from "mongoose";
-import AltUser from "../../src/models/altUser";
+import AltAccount from "../../src/models/altAccount";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") return;
@@ -24,15 +24,15 @@ export default async function handler(req, res) {
 
     res.status(200).json({ message: "Login successfully" });
   } else {
-    const existingUser = await AltUser.findOne({ email });
-    if (!existingUser) {
-      const altUser = new AltUser({
+    const existingAccount = await AltAccount.findOne({ email });
+    if (!existingAccount) {
+      const altAccount = new AltAccount({
         email,
         cart: {
           items: [],
         },
       });
-      await altUser.save();
+      await altAccount.save();
     }
   }
 }

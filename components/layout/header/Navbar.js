@@ -28,6 +28,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import SellIcon from "@mui/icons-material/Sell";
+import { authActions } from "../../../src/store/auth";
 
 const cx = classNames.bind(styles);
 
@@ -69,6 +70,7 @@ function Navbar() {
         });
         const data = await res.json();
         dispatch(cartActions.initExistingCart(data.cartItems));
+        dispatch(authActions.login());
       }
     };
 

@@ -4,6 +4,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import styles from "./LogoutButton.module.scss";
 import { useDispatch } from "react-redux";
 import { authActions } from "../../../src/store/auth";
+import { cartActions } from "../../../src/store/cart";
 
 const clientId =
   "28621200637-b33nlbjs4h5rpl5fp3d8tkdc3utp87fe.apps.googleusercontent.com";
@@ -17,6 +18,9 @@ function LogoutButton({ type }) {
       localStorage.removeItem("nameGg");
       localStorage.removeItem("imageGg");
       localStorage.removeItem("email");
+
+      dispatch(authActions.logout());
+      dispatch(cartActions.clearCart());
       router.replace("/");
     }
   };
@@ -39,11 +43,15 @@ function LogoutButton({ type }) {
     localStorage.removeItem("imageFb");
     localStorage.removeItem("nameFb");
     localStorage.removeItem("email");
+
+    dispatch(authActions.logout());
+    dispatch(cartActions.clearCart());
   };
 
   const emailLogout = () => {
     localStorage.removeItem("username");
     dispatch(authActions.logout());
+    dispatch(cartActions.clearCart());
   };
 
   return (

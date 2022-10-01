@@ -1,6 +1,6 @@
 import { Schema, model, models } from "mongoose";
 
-const altUserSchema = new Schema({
+const altAccountSchema = new Schema({
   email: {
     type: String,
     required: true,
@@ -8,9 +8,8 @@ const altUserSchema = new Schema({
   cart: {
     items: [
       {
-        productId: {
-          type: Schema.Types.ObjectId,
-          ref: "Product",
+        food: {
+          type: Object,
           required: true,
         },
         quantity: {
@@ -23,6 +22,6 @@ const altUserSchema = new Schema({
   },
 });
 
-const AltUser = models.AltUser || model("AltUser", altUserSchema);
+const AltAccount = models.AltAccount || model("AltAccount", altAccountSchema);
 
-export default AltUser;
+export default AltAccount;
