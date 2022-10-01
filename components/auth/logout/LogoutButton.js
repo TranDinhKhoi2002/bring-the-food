@@ -16,8 +16,7 @@ function LogoutButton({ type }) {
     if (typeof window !== "undefined") {
       localStorage.removeItem("nameGg");
       localStorage.removeItem("imageGg");
-      localStorage.removeItem("nameFb");
-      localStorage.removeItem("imageFb");
+      localStorage.removeItem("email");
       router.replace("/");
     }
   };
@@ -39,6 +38,7 @@ function LogoutButton({ type }) {
   const facebookLogout = () => {
     localStorage.removeItem("imageFb");
     localStorage.removeItem("nameFb");
+    localStorage.removeItem("email");
   };
 
   const emailLogout = () => {

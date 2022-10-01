@@ -141,3 +141,14 @@ h6 {
 .next-btn {
   right: 7px;
 }
+
+.product-column {
+  display: flex;
+  flex-direction: column;
+
+  .product {
+    display: flex;
+    height: unset;
+    margin: 4px 0;
+  }
+}

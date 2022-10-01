@@ -1,12 +1,7 @@
 import { Schema, model, models } from "mongoose";
 
-const userSchema = new Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
+const altUserSchema = new Schema({
+  email: {
     type: String,
     required: true,
   },
@@ -26,10 +21,8 @@ const userSchema = new Schema({
       },
     ],
   },
-  resetToken: String,
-  resetTokenExpiration: Date,
 });
 
-const User = models.User || model("User", userSchema);
+const AltUser = models.AltUser || model("AltUser", altUserSchema);
 
-export default User;
+export default AltUser;

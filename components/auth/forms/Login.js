@@ -34,7 +34,7 @@ function Login(props) {
 
   const handleSubmitForm = async () => {
     const [email, password] = getValues(["email", "password"]);
-    const loginBody = { email, password };
+    const loginBody = { email, password, type: "email" };
 
     const res = await fetch("/api/login", {
       method: "POST",

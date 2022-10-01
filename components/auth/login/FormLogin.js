@@ -50,11 +50,22 @@ function FormLogin() {
   const onSuccess = (res) => {
     refreshToken(res);
 
-    const user = res.profileObj;
-    const { name, imageUrl } = user;
+    const { name, imageUrl, email } = res.profileObj;
+
+    fetch("/api/login", {
+      method: "POST",
+      body: JSON.stringify({
+        email,
+        type: "gg",
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     localStorage.setItem("nameGg", name);
     localStorage.setItem("imageGg", imageUrl);
+    localStorage.setItem("email", email);
     router.replace("/");
   };
 
@@ -70,10 +81,22 @@ function FormLogin() {
     accessType: "offline",
   });
 
-  // Remember to modify this logic
-  const responseFacebook = (res) => {
+  const responseFacebook = async (res) => {
     localStorage.setItem("nameFb", res.name);
     localStorage.setItem("imageFb", res.picture.data.url);
+    localStorage.setItem("email", res.email);
+
+    fetch("/api/login", {
+      method: "POST",
+      body: JSON.stringify({
+        email: res.email,
+        type: "fb",
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
     router.replace("/");
 
     if (res.status === "unknown") {

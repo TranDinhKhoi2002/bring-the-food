@@ -25,6 +25,9 @@ const cartSlice = createSlice({
       } else {
         state.foods[foodIndex].amount += payloadAmount;
       }
+
+      localStorage.removeItem("cart");
+      localStorage.setItem("cart", JSON.stringify(state.foods));
     },
     removeFromCart(state, action) {
       const updatedFoods = state.foods.filter(
@@ -34,6 +37,9 @@ const cartSlice = createSlice({
     },
     clearCart(state) {
       state.foods = [];
+    },
+    initExistingCart(state, action) {
+      state.foods = action.payload;
     },
   },
 });

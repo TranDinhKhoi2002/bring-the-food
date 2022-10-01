@@ -1,6 +1,7 @@
 import { Search, ViewComfy, ViewList } from "@mui/icons-material";
 import classNames from "classnames/bind";
 import styles from "./ShopSearch.module.scss";
+import productsStyles from "../shopProduct/ShopProduct.module.scss";
 import { useEffect, useState } from "react";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
@@ -22,7 +23,7 @@ function ShopSearch({ onFoodSearch }) {
 
   let shopProduct;
   if (typeof window !== "undefined") {
-    shopProduct = document.querySelector(".products");
+    shopProduct = document.querySelector(`.${productsStyles["products"]}`);
   }
 
   const handleClickSearch = () => {
@@ -30,18 +31,18 @@ function ShopSearch({ onFoodSearch }) {
   };
 
   const handleSetGridView = () => {
-    if (shopProduct && foods.length > 0) {
+    if (foods.length > 0) {
       setGridView(true);
       setColumnView(false);
-      shopProduct.classList.remove("shop-product-column");
+      shopProduct?.classList.remove(productsStyles["product-column"]);
     }
   };
 
   const handleSetColumnView = () => {
-    if (shopProduct && foods.length > 0) {
+    if (foods.length > 0) {
       setGridView(false);
       setColumnView(true);
-      shopProduct.classList.add("shop-product-column");
+      shopProduct?.classList.add(productsStyles["product-column"]);
     }
   };
 

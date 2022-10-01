@@ -37,6 +37,8 @@ function Navbar() {
   const [isLogout, setIsLogout] = useState(false);
   const [domLoaded, setDomLoaded] = useState(false);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     setDomLoaded(true);
     const navbar = ref.current;
@@ -53,7 +55,25 @@ function Navbar() {
         navbar.style.marginTop = "5px";
       }
     });
-  }, []);
+
+    const getCart = async () => {
+      const email = localStorage.getItem("email");
+
+      if (email) {
+        const res = await fetch("/api/getCart", {
+          method: "POST",
+          body: JSON.stringify({ email }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await res.json();
+        dispatch(cartActions.initExistingCart(data.cartItems));
+      }
+    };
+
+    getCart();
+  }, [dispatch]);
 
   const router = useRouter();
 
@@ -68,7 +88,6 @@ function Navbar() {
     username = localStorage.getItem("username");
   }
 
-  const dispatch = useDispatch();
   const cartFoods = useSelector(selectFoodsFromCart);
 
   const toggleNavBarHandler = () => {

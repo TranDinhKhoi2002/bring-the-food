@@ -262,3 +262,50 @@
     }
   }
 }
+
+.products.product-column {
+  display: flex;
+  flex-direction: column;
+
+  .product {
+    display: flex;
+    height: unset;
+    margin: 4px 0;
+
+    &-main {
+      display: flex;
+    }
+
+    &-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 12px;
+    }
+
+    &-desc {
+      min-height: unset;
+    }
+
+    &-name {
+      margin: 0;
+    }
+
+    &-row {
+      flex-direction: column;
+      align-items: unset;
+    }
+
+    &-location {
+      margin: 0 0 8px -1px;
+    }
+
+    &-rate {
+      bottom: 10px;
+    }
+
+    &-img-container {
+      width: 200px;
+    }
+  }
+}
