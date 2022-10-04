@@ -5,7 +5,7 @@ import Cart from "../components/cart/Cart";
 import Intro from "../components/intro/Intro";
 import Slider from "../components/slider/Slider";
 import CategorySlider from "../components/slider/CategorySlider";
-import ShopFood from "../components/shop/ShopFood";
+import ShopFood from "../components/shop/shopFood/ShopFood";
 
 function Home(props) {
   const { guides, mainSlider, categorySlider, shopInfor } = props;

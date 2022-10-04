@@ -11,6 +11,10 @@ import { makeStyles } from "@mui/styles";
 import Dialog from "../../ui/dialog/Dialog";
 import { useState } from "react";
 import { selectIsLoggedIn } from "../../../src/store/auth";
+import ImageWithFallback from "./ImageWithFallback";
+import { ToastContainer, toast } from "react-toastify";
+import NotiToast from "../../ui/notification/NotiToast";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 const cx = classNames.bind(styles);
 
@@ -54,6 +58,28 @@ function ShopProduct({ foods, getFoodById }) {
         "Content-Type": "application/json",
       },
     });
+
+    return toast(
+      <NotiToast
+        title="Cart"
+        desc="Added food to cart successfully"
+        success={true}
+      />,
+      {
+        position: toast.POSITION.TOP_LEFT,
+        className: cx("toast-wrapper"),
+        closeButton: (
+          <div
+            style={{ position: "absolute", top: 8, right: 8, color: "#fff" }}
+          >
+            <ExitToAppIcon
+              sx={{ width: "2rem", height: "2rem", rotate: "180deg" }}
+            />
+          </div>
+        ),
+        autoClose: 3000,
+      }
+    );
   };
 
   const handlePagitionChange = (event, value) => {
@@ -73,8 +99,9 @@ function ShopProduct({ foods, getFoodById }) {
                 >
                   <div className={cx("product-img-wrapper")}>
                     <div className={cx("product-img-container")}>
-                      <Image
+                      <ImageWithFallback
                         src={food.img}
+                        fallbackSrc="/images/foodFallbackImg.jpg"
                         className={cx("product-img")}
                         alt={food.name}
                         layout="fill"
@@ -153,6 +180,8 @@ function ShopProduct({ foods, getFoodById }) {
           }}
         />
       )}
+
+      <ToastContainer />
     </Box>
   );
 }

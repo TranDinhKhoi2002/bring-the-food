@@ -5,11 +5,11 @@ import {
   foodActions,
   selectFoodFilter,
   selectFoods,
-} from "../../src/store/food";
-import foodApi from "../../src/api/foodApi";
-import ShopFilter from "./shopFilter/ShopFilter";
-import ShopSearch from "./shopSearch/ShopSearch";
-import ShopProduct from "./shopProduct/ShopProduct";
+} from "../../../src/store/food";
+import foodApi from "../../../src/api/foodApi";
+import ShopFilter from "../shopFilter/ShopFilter";
+import ShopSearch from "../shopSearch/ShopSearch";
+import ShopProduct from "../shopProduct/ShopProduct";
 import { useEffect } from "react";
 
 function ShopFood({ shopInfor }) {
@@ -34,10 +34,7 @@ function ShopFood({ shopInfor }) {
         dispatch(foodActions.fetchBreadsFood(breadsFood));
         break;
       case 3:
-        const sandwitchesFood = await foodApi.getFoods(
-          "/sandwitchesFood",
-          filter
-        );
+        const sandwitchesFood = await foodApi.getFoods("/sandwiches", filter);
         dispatch(foodActions.fetchSandwichesFood(sandwitchesFood));
         break;
       case 4:

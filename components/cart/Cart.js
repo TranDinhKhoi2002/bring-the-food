@@ -14,6 +14,10 @@ import { Box, Grid, Typography, Divider, Button } from "@mui/material";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Dialog from "../ui/dialog/Dialog";
+import { ToastContainer, toast } from "react-toastify";
+import NotiToast from "../ui/notification/NotiToast";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import ImageWithFallback from "../shop/shopProduct/ImageWithFallback";
 
 const cx = classNames.bind(styles);
 
@@ -39,17 +43,72 @@ function Cart() {
     dispatch(cartActions.showCart(false));
   };
 
-  const handleShowDialog = () => {
-    if (!userAvatar && !imgFb) {
-      setIsShow(true);
-    } else {
-      setIsShow(false);
-    }
+  const handleCheckout = () => {
     dispatch(cartActions.showCart(false));
+    router.push("/checkout");
   };
 
-  const handleRemoveFoodById = (id) => {
+  const handleRemoveFromCart = (id) => {
     dispatch(cartActions.removeFromCart(id));
+    fetch("/api/removeFromCart", {
+      method: "DELETE",
+      body: JSON.stringify({
+        email: localStorage.getItem("email"),
+        foodId: id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    showToast("Cart", "Removed food from cart successfully", true);
+  };
+
+  const hanleRemoveEntireFood = (id) => {
+    dispatch(cartActions.removeEntireFood(id));
+    fetch("/api/removeEntireFood", {
+      method: "DELETE",
+      body: JSON.stringify({
+        email: localStorage.getItem("email"),
+        foodId: id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    showToast("Cart", "Removed food from cart successfully", true);
+  };
+
+  const handleAddToCart = (food) => {
+    dispatch(cartActions.addToCart(food));
+    fetch("/api/addToCart", {
+      method: "POST",
+      body: JSON.stringify({
+        email: localStorage.getItem("email"),
+        food: food.food,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    showToast("Cart", "Added food from cart successfully", true);
+  };
+
+  const showToast = (title, desc, success) => {
+    return toast(<NotiToast title={title} desc={desc} success={success} />, {
+      position: toast.POSITION.TOP_LEFT,
+      className: cx("toast-wrapper"),
+      closeButton: (
+        <div style={{ position: "absolute", top: 8, right: 8, color: "#fff" }}>
+          <ExitToAppIcon
+            sx={{ width: "2rem", height: "2rem", rotate: "180deg" }}
+          />
+        </div>
+      ),
+      autoClose: 3000,
+    });
   };
 
   return (
@@ -83,19 +142,39 @@ function Cart() {
             <div className={cx("box-main")}>
               {cartFoods.map((food, index) => (
                 <Box key={index} className={cx("box-food")} sx={{ p: 1.6 }}>
-                  <Image
+                  <ImageWithFallback
                     src={food.food.img}
+                    fallbackSrc="/images/foodFallbackImg.jpg"
                     alt={food.food.name}
                     width={80}
                     height={80}
                   />
                   <Box className={cx("box-title")}>
                     <Typography variant="h5">{food.food.name}</Typography>
-                    <Typography variant="body1">{`$${food.food.price} X ${food.quantity}`}</Typography>
+                    <Typography variant="body1">{`$${food.food.price}`}</Typography>
+                    <Box className={cx("box-amount")}>
+                      <span
+                        onClick={() => {
+                          handleRemoveFromCart(food.food.id);
+                        }}
+                      >
+                        -
+                      </span>
+                      <span>{food.quantity}</span>
+                      <span
+                        onClick={() => {
+                          handleAddToCart(food);
+                        }}
+                      >
+                        +
+                      </span>
+                    </Box>
                   </Box>
                   <Box
                     className={cx("delete-icon")}
-                    onClick={() => handleRemoveFoodById(food.id)}
+                    onClick={() => {
+                      hanleRemoveEntireFood(food.food.id);
+                    }}
                   >
                     <DeleteIcon />
                   </Box>
@@ -137,7 +216,7 @@ function Cart() {
 
         {cartFoods.length > 0 && (
           <Button
-            onClick={handleShowDialog}
+            onClick={handleCheckout}
             fullWidth
             className={cx("btn-checkout")}
             variant="contained"
@@ -150,6 +229,8 @@ function Cart() {
 
       <Dialog isShow={isShowDialog} onSetDialog={setIsShowDialog} />
       {isShowCart && <Box className="overlay" onClick={handleHideCart} />}
+
+      <ToastContainer />
     </>
   );
 }

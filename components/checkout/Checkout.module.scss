@@ -1,0 +1,26 @@
+@import "assets/styles/colors";
+
+.cart {
+  padding: 0 100px;
+}
+
+.empty-cart {
+  margin: 150px 0;
+  text-align: center;
+
+  h3 {
+    margin-top: 20px;
+  }
+
+  .buy-btn {
+    width: 260px;
+    background-color: $primary-red-color;
+    color: $primary-white-color;
+    margin-top: 20px;
+    font-size: 1.4rem;
+
+    &:hover {
+      background-color: #f73835;
+    }
+  }
+}

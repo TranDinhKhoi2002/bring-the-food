@@ -1,0 +1,33 @@
+@import "assets/styles/colors";
+
+.cart {
+  margin-top: 30px;
+
+  &-item {
+    display: flex;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e8e8e8;
+  }
+
+  .food-infor {
+    margin-left: 16px;
+
+    h5:first-child {
+      font-size: 2rem !important;
+      line-height: 2rem !important;
+      color: rgba(0, 0, 0, 0.84) !important;
+    }
+
+    .food-price {
+      color: $primary-red-color !important;
+      font-size: 1.8rem !important;
+    }
+
+    p {
+      margin: 6px 0 12px;
+      font-size: 1.4rem;
+      color: #514d4d;
+    }
+  }
+}

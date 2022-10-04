@@ -50,11 +50,11 @@ function FormLogin() {
     setOptionsIsShow(false);
   };
 
-  const onSuccess = (res) => {
+  const onSuccess = async (res) => {
     refreshToken(res);
 
     const { name, imageUrl, email } = res.profileObj;
-    fetch("/api/login", {
+    await fetch("/api/login", {
       method: "POST",
       body: JSON.stringify({
         email,
@@ -95,7 +95,7 @@ function FormLogin() {
     localStorage.setItem("imageFb", res.picture.data.url);
     localStorage.setItem("email", res.email);
 
-    fetch("/api/login", {
+    await fetch("/api/login", {
       method: "POST",
       body: JSON.stringify({
         email: res.email,

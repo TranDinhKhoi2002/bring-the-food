@@ -39,7 +39,8 @@ function DialogComponent({ isShow, onSetDialog }) {
             id="alert-dialog-slide-description"
             className={styles.content}
           >
-            You are not signed in. Please sign in to use this feature!
+            You are not signed in (or your log in session is expired). Please
+            sign in to use this feature!
           </DialogContentText>
         </DialogContent>
         <DialogActions>

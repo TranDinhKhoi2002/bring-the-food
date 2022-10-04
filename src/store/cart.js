@@ -26,16 +26,33 @@ const cartSlice = createSlice({
       }
     },
     removeFromCart(state, action) {
-      const updatedFoods = state.foods.filter(
-        (food) => food.id !== action.payload.id
+      const foodIndex = state.foods.findIndex(
+        (food) => food.food.id === action.payload
       );
-      state.foods = updatedFoods;
+
+      if (state.foods[foodIndex].quantity === 1) {
+        const updatedCart = state.foods.filter(
+          (food) => food.food.id !== action.payload
+        );
+        state.foods = updatedCart;
+      } else {
+        state.foods[foodIndex].quantity--;
+      }
+    },
+    removeEntireFood(state, action) {
+      const updatedCart = state.foods.filter(
+        (food) => food.food.id !== action.payload
+      );
+      state.foods = updatedCart;
     },
     clearCart(state) {
       state.foods = [];
     },
     initExistingCart(state, action) {
       state.foods = action.payload;
+    },
+    getCartFromDb(state, action) {
+      console.log(action.type);
     },
   },
 });

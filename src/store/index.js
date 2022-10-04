@@ -5,6 +5,7 @@ import authReducer from "./auth";
 import cartReducer from "./cart";
 import detailTabReducer from "./detailTab";
 import rootSaga from "../saga/rootSaga";
+import { createWrapper, HYDRATE } from "next-redux-wrapper";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -15,10 +16,28 @@ const rootReducer = combineReducers({
   comment: detailTabReducer,
 });
 
-export const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(sagaMiddleware),
-});
+const masterReducer = (state, action) => {
+  if (action.type === HYDRATE) {
+    const nextState = {
+      ...state, // use previous state
+      ...action.payload,
+    };
 
-sagaMiddleware.run(rootSaga);
+    return nextState;
+  }
+
+  return rootReducer(state, action);
+};
+
+export const makeStore = () => {
+  const store = configureStore({
+    reducer: masterReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(sagaMiddleware),
+  });
+
+  sagaMiddleware.run(rootSaga);
+  return store;
+};
+
+export const wrapper = createWrapper(makeStore);

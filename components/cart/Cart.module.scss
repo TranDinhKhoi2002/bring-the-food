@@ -22,10 +22,30 @@
 
   &-main {
     overflow-y: auto;
-    max-height: 500px;
+    max-height: 550px;
   }
 
-  & .empty-img {
+  &-amount {
+    width: 80px;
+    height: 40px;
+    background-color: #e8e8e8;
+    line-height: 40px;
+    text-align: center;
+
+    & span:first-child {
+      float: left;
+      padding-left: 10px;
+      cursor: pointer;
+    }
+
+    & span:last-child {
+      float: right;
+      padding-right: 10px;
+      cursor: pointer;
+    }
+  }
+
+  .empty-img {
     width: 320px;
     height: 320px;
 
@@ -53,7 +73,7 @@
   display: flex;
   margin-top: 20px;
 
-  & img {
+  img {
     width: 80px;
     height: 80px;
   }
@@ -62,35 +82,33 @@
 .box-title {
   padding-left: 10px;
 
-  & .MuiTypography-h5 {
+  h5 {
     font-size: 1.7rem !important;
     line-height: 2rem !important;
     color: rgba(0, 0, 0, 0.84) !important;
   }
 
-  & .MuiTypography-body1 {
+  p {
     color: #ff514e !important;
     font-size: 1.4rem !important;
     line-height: 1.5rem !important;
     font-weight: 500 !important;
-    margin-top: 2px;
-  }
-
-  & .MuiTypography-body2 {
-    font-size: 1.3rem !important;
-    line-height: 1.4rem !important;
-    color: rgba(7, 6, 6, 0.84) !important;
-    margin-top: 16px !important;
+    margin: 3px 0;
   }
 }
 
 .delete-icon {
   margin: auto 0 auto auto;
   cursor: pointer;
-  & .MuiSvgIcon-root {
+  svg {
     color: #b2bec3;
     width: 2.2rem;
     height: 2.2rem;
+    transition: all 0.15s linear;
+
+    &:hover {
+      color: #949fa3;
+    }
   }
 }
 
@@ -105,6 +123,10 @@
   &:hover {
     background-color: #f73835;
   }
+}
+
+.btn-checkout {
+  margin: 30px auto 0;
 }
 
 .empty-cart {
@@ -122,26 +144,6 @@
   }
 }
 
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeOutRight {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  to {
-    opacity: 0;
-    transform: translateX(100%);
-  }
+.toast-wrapper {
+  background-color: #3598db !important;
 }

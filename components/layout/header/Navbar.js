@@ -1,4 +1,4 @@
-import { useRef, useState, useLayoutEffect, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -23,7 +23,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import ReviewsIcon from "@mui/icons-material/Reviews";
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
-import LogoutIcon from "@mui/icons-material/Logout";
 import HomeIcon from "@mui/icons-material/Home";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
@@ -39,23 +38,10 @@ function Navbar() {
   const [domLoaded, setDomLoaded] = useState(false);
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   useEffect(() => {
     setDomLoaded(true);
-    const navbar = ref.current;
-    window.addEventListener("scroll", () => {
-      if (
-        document.body.scrollTop > 50 ||
-        document.documentElement.scrollTop > 50
-      ) {
-        navbar.style.backgroundColor = "rgba(0, 0, 0, 0.84)";
-        navbar.style.marginTop = "0";
-      } else {
-        navbar.style.backgroundColor = "transparent";
-        navbar.style.boxShadow = "unset";
-        navbar.style.marginTop = "5px";
-      }
-    });
 
     const getCart = async () => {
       const email = localStorage.getItem("email");
@@ -76,10 +62,6 @@ function Navbar() {
 
     getCart();
   }, [dispatch]);
-
-  const router = useRouter();
-
-  const ref = useRef(null);
 
   let nameGg, imageGg, nameFb, imageFb, username;
   if (typeof window !== "undefined") {
@@ -107,20 +89,20 @@ function Navbar() {
   return (
     <>
       <AppBar
-        ref={ref}
         position="static"
         sx={{
           position: "fixed",
           top: 0,
           left: 0,
           right: 0,
-          backgroundColor: "transparent",
+          backgroundColor: "rgba(0, 0, 0, 0.84)",
           zIndex: 100,
           marginTop: "5 !important",
           transition: "0.2s ease",
           padding: "0 !important",
           boxShadow: "unset !important",
         }}
+        className="app-bar"
       >
         {domLoaded && (
           <Container maxWidth="lg">

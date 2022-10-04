@@ -1,0 +1,39 @@
+@import "assets/styles/colors";
+
+.cart-total {
+  background-color: #f2f2f2;
+  padding: 28px;
+}
+
+.cart-price {
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 0;
+
+  span:last-child {
+    color: $primary-red-color;
+  }
+
+  &:last-child {
+    font-size: 2rem;
+  }
+}
+
+.pay-btn {
+  width: 100%;
+  background-color: $primary-red-color;
+  color: $primary-white-color;
+  margin-top: 20px;
+  font-size: 1.8rem;
+
+  &:hover {
+    background-color: #f73835;
+  }
+}
+
+.shopping-btn {
+  text-align: center;
+  margin-top: 30px;
+  color: rgba(0, 0, 0, 0.84);
+  text-decoration: underline;
+}

@@ -21,8 +21,6 @@ export default async function handler(req, res) {
     if (!isValidPassword) {
       return res.status(422).json({ message: "Password is incorrect" });
     }
-
-    res.status(200).json({ message: "Login successfully" });
   } else {
     const existingAccount = await AltAccount.findOne({ email });
     if (!existingAccount) {
@@ -35,4 +33,6 @@ export default async function handler(req, res) {
       await altAccount.save();
     }
   }
+
+  res.status(200).json({ message: "Login successfully" });
 }
