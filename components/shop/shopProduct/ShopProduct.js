@@ -6,10 +6,14 @@ import styles from "./ShopProduct.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../../../src/store/cart";
 import foodApi from "../../../src/api/foodApi";
-import { foodActions, selectFoodFilter } from "../../../src/store/food";
+import {
+  foodActions,
+  selectFoodFilter,
+  selectFoods,
+} from "../../../src/store/food";
 import { makeStyles } from "@mui/styles";
 import Dialog from "../../ui/dialog/Dialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { selectIsLoggedIn } from "../../../src/store/auth";
 import ImageWithFallback from "./ImageWithFallback";
 import { ToastContainer, toast } from "react-toastify";
@@ -33,10 +37,20 @@ const useStyles = makeStyles({
 
 function ShopProduct({ foods, getFoodById }) {
   const [isShowDialog, setIsShowDialog] = useState(false);
+  const [listFood, setListFood] = useState(foods);
   const filter = useSelector(selectFoodFilter);
+  const fetchedFood = useSelector(selectFoods);
 
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
+
+  useEffect(() => {
+    dispatch(foodActions.fetchFoodList(filter));
+  }, [dispatch, filter]);
+
+  useEffect(() => {
+    setListFood(fetchedFood);
+  }, [fetchedFood]);
 
   const styles = useStyles();
 
@@ -88,10 +102,10 @@ function ShopProduct({ foods, getFoodById }) {
 
   return (
     <Box>
-      {foods.length > 0 ? (
+      {listFood.length > 0 ? (
         <div>
           <div className={cx("products")}>
-            {foods.map((food, index) => (
+            {listFood.map((food, index) => (
               <div key={index} className={cx("product")}>
                 <div
                   className={cx("product-main")}

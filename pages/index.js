@@ -6,16 +6,17 @@ import Intro from "../components/intro/Intro";
 import Slider from "../components/slider/Slider";
 import CategorySlider from "../components/slider/CategorySlider";
 import ShopFood from "../components/shop/shopFood/ShopFood";
+import foodApi from "../src/api/foodApi";
 
 function Home(props) {
-  const { guides, mainSlider, categorySlider, shopInfor } = props;
+  const { guides, mainSlider, categorySlider, shopInfor, listFood } = props;
   return (
     <>
       <Slider mainSlider={mainSlider} />
       <Cart />
       <Intro guides={guides} />
       <CategorySlider categorySlider={categorySlider} />
-      <ShopFood shopInfor={shopInfor} />
+      <ShopFood shopInfor={shopInfor} listFood={listFood} />
     </>
   );
 }
@@ -40,12 +41,18 @@ export async function getStaticProps() {
     };
   }
 
+  const listFood = await foodApi.getFoods("/best-foods", {
+    _page: 1,
+    _limit: 16,
+  });
+
   return {
     props: {
       guides: guidesData.guides,
       mainSlider: mainSliderData.sliders,
       categorySlider: categorySlider.sliders,
       shopInfor: shopInfor,
+      listFood: listFood,
     },
   };
 }

@@ -22,6 +22,7 @@ function ImageWithFallback({ src, fallbackSrc, alt, ...props }) {
         setImgSrc(fallbackSrc);
       }}
       alt={alt}
+      style={{ maxWidth: "100%" }}
     />
   );
 }

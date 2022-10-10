@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
 
 const initialState = {
   loading: false,
@@ -8,7 +9,7 @@ const initialState = {
   },
   foods: [],
   id: null,
-  foodById: [],
+  foodById: {},
 };
 
 const foodSlice = createSlice({
@@ -74,6 +75,11 @@ const foodSlice = createSlice({
     },
 
     setFilterWidthDebounce(state, action) {},
+  },
+  extraReducers: {
+    [HYDRATE]: (state, action) => {
+      state.id = action.payload;
+    },
   },
 });
 

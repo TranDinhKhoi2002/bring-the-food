@@ -1,27 +1,17 @@
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid } from "@mui/material";
-import {
-  foodActions,
-  selectFoodFilter,
-  selectFoods,
-} from "../../../src/store/food";
+import { foodActions, selectFoodFilter } from "../../../src/store/food";
 import foodApi from "../../../src/api/foodApi";
 import ShopFilter from "../shopFilter/ShopFilter";
 import ShopSearch from "../shopSearch/ShopSearch";
 import ShopProduct from "../shopProduct/ShopProduct";
-import { useEffect } from "react";
 
-function ShopFood({ shopInfor }) {
+function ShopFood({ shopInfor, listFood }) {
   const { foodTypes, priceOptions } = shopInfor;
   const router = useRouter();
   const dispatch = useDispatch();
   const filter = useSelector(selectFoodFilter);
-  const foods = useSelector(selectFoods);
-
-  useEffect(() => {
-    dispatch(foodActions.fetchFoodList(filter));
-  }, [dispatch, filter]);
 
   const handleGetFoodByType = async (index) => {
     switch (index) {
@@ -105,7 +95,7 @@ function ShopFood({ shopInfor }) {
       </Grid>
       <Grid item xs={12} md={10}>
         <ShopSearch onFoodSearch={handleFoodSearch} />
-        <ShopProduct foods={foods} getFoodById={navigateToDetailFood} />
+        <ShopProduct getFoodById={navigateToDetailFood} foods={listFood} />
       </Grid>
     </Grid>
   );

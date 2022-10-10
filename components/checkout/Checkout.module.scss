@@ -1,7 +1,12 @@
 @import "assets/styles/colors";
+@import "assets/styles/mixins";
 
 .cart {
   padding: 0 100px;
+
+  @include respond(mobileMedium) {
+    padding: 0 20px;
+  }
 }
 
 .empty-cart {

@@ -18,11 +18,15 @@ function Checkout() {
     <>
       {cartFoods.length > 0 && (
         <div className={cx("cart")}>
-          <Grid container spacing={8} style={{ margin: "100px 0" }}>
-            <Grid item xs={12} md={7}>
+          <Grid
+            container
+            spacing={6}
+            style={{ margin: "100px 0", width: "100%" }}
+          >
+            <Grid item xs={12} md={7} sx={{ paddingLeft: "0 !important" }}>
               <PreviewCart />
             </Grid>
-            <Grid item xs={12} md={5}>
+            <Grid item xs={12} md={5} sx={{ paddingLeft: "0 !important" }}>
               <TotalCart />
             </Grid>
           </Grid>
