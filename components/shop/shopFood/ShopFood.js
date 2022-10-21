@@ -18,22 +18,27 @@ function ShopFood({ shopInfor, listFood }) {
       case 1:
         const burgersFood = await foodApi.getFoods("/burgers", filter);
         dispatch(foodActions.fetchBurgersFood(burgersFood));
+        localStorage.setItem("listFood", JSON.stringify(burgersFood));
         break;
       case 2:
         const breadsFood = await foodApi.getFoods("/breads", filter);
         dispatch(foodActions.fetchBreadsFood(breadsFood));
+        localStorage.setItem("listFood", JSON.stringify(breadsFood));
         break;
       case 3:
         const sandwitchesFood = await foodApi.getFoods("/sandwiches", filter);
         dispatch(foodActions.fetchSandwichesFood(sandwitchesFood));
+        localStorage.setItem("listFood", JSON.stringify(sandwitchesFood));
         break;
       case 4:
         const drinksFood = await foodApi.getFoods("/drinks", filter);
         dispatch(foodActions.fetchDrinksFood(drinksFood));
+        localStorage.setItem("listFood", JSON.stringify(drinksFood));
         break;
       case 5:
         const pizzasFood = await foodApi.getFoods("/pizzas", filter);
         dispatch(foodActions.fetchPizzasFood(pizzasFood));
+        localStorage.setItem("listFood", JSON.stringify(pizzasFood));
         break;
       default:
         break;

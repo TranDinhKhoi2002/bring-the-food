@@ -1,0 +1,32 @@
+{
+  "ingredients": [
+    {
+      "metric": "Metrics",
+      "ingredient": "Ingredients"
+    },
+    {
+      "metric": "Size",
+      "ingredient": "Egg"
+    },
+    {
+      "metric": "Energy",
+      "ingredient": "Milk Protein"
+    },
+    {
+      "metric": "Calo",
+      "ingredient": "Sesame"
+    },
+    {
+      "metric": "Fat",
+      "ingredient": "Lactose"
+    },
+    {
+      "metric": "Gluxit",
+      "ingredient": "Gluten"
+    },
+    {
+      "metric": "Protein",
+      "ingredient": "Mustard"
+    }
+  ]
+}

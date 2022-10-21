@@ -25,6 +25,18 @@ const cartSlice = createSlice({
         state.foods[foodIndex].quantity++;
       }
     },
+    addWithQuantity(state, action) {
+      const { food: payloadFood, quantity } = action.payload;
+
+      const foodIndex = state.foods.findIndex(
+        (food) => food.food.id === payloadFood.id
+      );
+      if (foodIndex >= 0) {
+        state.foods[foodIndex].quantity += quantity;
+      } else {
+        state.foods.push({ food: payloadFood, quantity });
+      }
+    },
     removeFromCart(state, action) {
       const foodIndex = state.foods.findIndex(
         (food) => food.food.id === action.payload
@@ -50,9 +62,6 @@ const cartSlice = createSlice({
     },
     initExistingCart(state, action) {
       state.foods = action.payload;
-    },
-    getCartFromDb(state, action) {
-      console.log(action.type);
     },
   },
 });

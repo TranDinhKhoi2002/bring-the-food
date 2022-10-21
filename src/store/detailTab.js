@@ -2,17 +2,20 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   comment: "",
-  listComment: [] || JSON.parse(localStorage.getItem("comment")),
+  listComment:
+    JSON.parse(
+      typeof window !== "undefined" && localStorage.getItem("comment")
+    ) || [],
 };
 
-const detailTabSlice = createSlice({
-  name: "detailTab",
+const commentSlice = createSlice({
+  name: "comment",
   initialState,
   reducers: {
     setComment(state, action) {
       state.comment = action.payload;
     },
-    getComment(state, action) {
+    addCommentToList(state, action) {
       return {
         ...state,
         listComment: [...state.listComment, action.payload],
@@ -21,9 +24,9 @@ const detailTabSlice = createSlice({
   },
 });
 
-export const detailTabActions = detailTabSlice.actions;
+export const commentActions = commentSlice.actions;
 
 export const selectComment = (state) => state.comment.comment;
 export const selectListComment = (state) => state.comment.listComment;
 
-export default detailTabSlice.reducer;
+export default commentSlice.reducer;

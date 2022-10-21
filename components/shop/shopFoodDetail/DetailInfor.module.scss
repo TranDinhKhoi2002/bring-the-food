@@ -139,21 +139,6 @@
     border-radius: 20px;
   }
 
-  .like-button {
-    @include respond(phone) {
-      margin: 15px 10px 0 20px;
-    }
-
-    @include respond(tablet) {
-      margin-right: 24px;
-    }
-
-    svg {
-      font-size: 1.6rem;
-      fill: rgba(0, 0, 0, 0.55);
-    }
-  }
-
   &-buttons .circle-button {
     min-width: 3.5rem;
     height: 3.5rem;
@@ -186,4 +171,8 @@
       fill: $primary-red-color;
     }
   }
+}
+
+.toast-wrapper {
+  background-color: #3598db !important;
 }

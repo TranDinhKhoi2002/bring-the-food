@@ -58,10 +58,10 @@ const foodSlice = createSlice({
     },
 
     getFoodById(state, action) {
-      const newFood = action.payload;
+      const loadedFood = action.payload;
       return {
         ...state,
-        foodById: [...state.foodById, newFood],
+        foodById: loadedFood,
       };
     },
 

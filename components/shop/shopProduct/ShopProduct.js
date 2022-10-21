@@ -16,7 +16,7 @@ import Dialog from "../../ui/dialog/Dialog";
 import { useEffect, useState } from "react";
 import { selectIsLoggedIn } from "../../../src/store/auth";
 import ImageWithFallback from "./ImageWithFallback";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import NotiToast from "../../ui/notification/NotiToast";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
@@ -194,8 +194,6 @@ function ShopProduct({ foods, getFoodById }) {
           }}
         />
       )}
-
-      <ToastContainer />
     </Box>
   );
 }

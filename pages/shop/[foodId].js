@@ -1,36 +1,57 @@
+import path from "path";
+import fs from "fs/promises";
+
+import { useDispatch } from "react-redux";
 import Banner from "../../components/shop/shopFoodDetail/Banner";
 import DetailContainer from "../../components/shop/shopFoodDetail/DetailContainer";
 import foodApi from "../../src/api/foodApi";
+import { foodActions } from "../../src/store/food";
+import DetailTabs from "../../components/shop/shopFoodDetail/DetailTabs";
 
 function FoodDetailPage(props) {
-  const { foodId } = props;
-  console.log(foodId);
+  const { foodId, ingredients } = props;
+  let selectedFood = props.selectedFood;
+
+  if (!selectedFood && typeof window !== "undefined") {
+    const listFood = JSON.parse(localStorage.getItem("listFood"));
+    selectedFood = listFood.find((food) => food.id === foodId);
+  }
+
+  const dispatch = useDispatch();
+  dispatch(foodActions.getFoodById(selectedFood));
 
   return (
     <div>
       <Banner />
       <DetailContainer />
+      <DetailTabs ingredients={ingredients} />
     </div>
   );
 }
 
-// export const getStaticProps = wrapper.getStaticProps((store) => (ctx) => {
-//   const { foodId } = ctx.params;
-//   store.dispatch(foodActions.getFoodById(foodId));
-
-//   return {
-//     props: {
-//       test: "aaa",
-//     },
-//   };
-// });
-
 export async function getStaticProps(context) {
   const { foodId } = context.params;
+  const listFood = await foodApi.getFoods("/best-foods");
+
+  const filePath = path.join(process.cwd(), "data", "ingredients.json");
+  const jsonData = await fs.readFile(filePath);
+  const data = JSON.parse(jsonData);
+
+  const selectedFood = listFood.find((food) => food.id === foodId);
+  if (!selectedFood) {
+    return {
+      props: {
+        foodId,
+        selectedFood: null,
+        ingredients: data.ingredients,
+      },
+    };
+  }
 
   return {
     props: {
-      foodId,
+      selectedFood: selectedFood,
+      ingredients: data.ingredients,
     },
   };
 }
