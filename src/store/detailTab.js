@@ -4,7 +4,7 @@ const initialState = {
   comment: "",
   listComment:
     JSON.parse(
-      typeof window !== "undefined" && localStorage.getItem("comment")
+      typeof window !== "undefined" && localStorage.getItem("comments")
     ) || [],
 };
 

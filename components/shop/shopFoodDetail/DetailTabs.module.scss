@@ -1,0 +1,50 @@
+@import "assets/styles/colors";
+@import "assets/styles/mixins";
+
+.detail-tab {
+  padding: 0 200px;
+  margin: 100px auto;
+
+  @include respond(mobile) {
+    padding: 0;
+    margin: 80px 16px;
+  }
+
+  &-buttons {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  &-button {
+    font-size: 1.95rem;
+    font-weight: bold;
+    margin: 0 10px;
+    transition: all 0.25s ease-in-out;
+    user-select: none;
+    cursor: pointer;
+  }
+
+  .mui-button {
+    font-size: 1.4rem;
+    color: rgba(0, 0, 0, 0.84);
+    background-color: transparent;
+
+    &.active {
+      color: $primary-white-color;
+      background-color: $primary-red-color;
+    }
+  }
+
+  &-button-bg {
+    position: absolute;
+    top: 0;
+    content: "";
+    height: 100%;
+    border-radius: 10px;
+    z-index: -1;
+    transition: all 0.35s ease-in-out;
+    background-color: $primary-red-color;
+  }
+}

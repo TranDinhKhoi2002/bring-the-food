@@ -5,10 +5,7 @@
   &-desc {
     font-size: 1.4rem;
     line-height: 1.7;
-
-    @include respond(phone) {
-      text-align: center;
-    }
+    text-align: center;
   }
 
   &-table {

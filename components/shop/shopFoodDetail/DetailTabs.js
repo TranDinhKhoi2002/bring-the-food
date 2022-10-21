@@ -13,8 +13,9 @@ const cx = classNames.bind(styles);
 function DetailTabs({ ingredients }) {
   const [isShowDesc, setIsShowDesc] = useState(true);
   const userAvarar =
-    typeof window !== "undefined" && localStorage.getItem("userImg");
-  const imgFb = typeof window !== "undefined" && localStorage.getItem("imgFb");
+    typeof window !== "undefined" && localStorage.getItem("imageGg");
+  const imgFb =
+    typeof window !== "undefined" && localStorage.getItem("imageFb");
 
   const comments = useSelector(selectListComment);
 
@@ -23,7 +24,7 @@ function DetailTabs({ ingredients }) {
       <div className={cx("detail-tab-buttons")}>
         <div className={cx("detail-tab-button")}>
           <Button
-            className={cx(isShowDesc ? "active" : "button-tab")}
+            className={cx(isShowDesc ? "active" : "button-tab", "mui-button")}
             onClick={() => setIsShowDesc(true)}
             variant="contained"
           >
@@ -33,8 +34,8 @@ function DetailTabs({ ingredients }) {
 
         <div className={cx("detail-tab-button")}>
           <Button
-            className={cx(isShowDesc ? "active" : "button-tab")}
-            onClick={() => setIsShowDesc(true)}
+            className={cx(!isShowDesc ? "active" : "button-tab", "mui-button")}
+            onClick={() => setIsShowDesc(false)}
             variant="contained"
           >
             Comments {(userAvarar || imgFb) && `(${comments.length})`}

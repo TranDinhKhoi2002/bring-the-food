@@ -1,0 +1,23 @@
+@import "assets/styles/colors";
+@import "assets/styles/mixins";
+
+.comments {
+  &-main {
+    display: flex;
+    align-items: center;
+    padding: 32px 0;
+    gap: 16px;
+  }
+
+  &-heading {
+    color: $primary-black-color;
+    font-size: 1.6rem;
+    line-height: 1.8rem;
+  }
+
+  &-content {
+    font-size: 1.5rem;
+    line-height: 1.7rem;
+    padding-top: 8px;
+  }
+}
