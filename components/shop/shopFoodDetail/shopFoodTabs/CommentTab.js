@@ -3,6 +3,7 @@ import { selectListComment } from "../../../../src/store/detailTab";
 import classNames from "classnames/bind";
 import styles from "./CommentTab.module.scss";
 import { Avatar } from "@mui/material";
+import CommentInput from "./CommentInput";
 
 const cx = classNames.bind(styles);
 
@@ -41,7 +42,7 @@ function CommentTab() {
           ))}
         </div>
       )}
-      {/* Tab user for posting comment */}
+      <CommentInput />
     </div>
   );
 }
